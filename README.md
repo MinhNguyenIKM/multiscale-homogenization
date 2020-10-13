@@ -15,7 +15,7 @@ Devlopement: ntvminh286@gmail.com (institute email: minh.nguyen@ikm.uni-hannover
 
 DOI: https://doi.org/10.1002/nme.6493
 
-ABstract:
+Abstract:
 We propose a surrogate model for two‐scale computational homogenization of elastostatics at finite strains. 
 The macroscopic constitutive law is made numerically available via an explicit formulation of the associated macroenergy density. 
 This energy density is constructed by using a neural network architecture that mimics a high‐dimensional model representation. 
