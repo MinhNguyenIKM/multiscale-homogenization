@@ -4,7 +4,7 @@ The microscopic BVPs are solved by FFT method.
 The macroscopic BVPs are solved by FEM method (we use PyFEM framework based on the book Nonlinear Finite Element Analysis of Solids and Structures of Rene' de Borst et. al.)
 
 
-This is my part of code from the work "A surrogate model for computational homogenization of elastostatics at finite strain using high‐dimensional model representation‐based neural network"
+This is my part of code from the work "<b>A surrogate model for computational homogenization of elastostatics at finite strain using high‐dimensional model representation‐based neural network</b>"
 Authors: 
 Vien Minh Nguyen‐Thanh,
 Lu Trong Khiem Nguyen,
