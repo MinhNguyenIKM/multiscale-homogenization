@@ -29,7 +29,7 @@ in the Lippmann‐Schwinger form without resorting to the reference medium. In t
 strict numerical stability conditions in the nonlinear regime is avoided. In addition, we derive the projection operator used in the FFT‐based 
 method for homogenization of elasticity at finite strain.
 
-## Guideline to setup the environments:
+## Guideline to setup the working environment:
 Setup:
 
 1. I assume that you have already downloaded the folder "multiscale-homogenization" and name it as "multiscale-homogenization". 
