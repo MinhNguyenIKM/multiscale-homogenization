@@ -44,6 +44,6 @@ Setup:
 
 5. Setup PYTHONPATH environment by doing either a.(temporary use) or b.(permanent use):
 
-a. export PYTHONPATH="$PYTHONPATH:<workingdir>/multiscale-homogenization"
+a. export PYTHONPATH="$PYTHONPATH:\<workingdir\>/multiscale-homogenization"
 
 b. add the above line to the end of file ~/.bashrc and execute "source ~/.bashrc"
