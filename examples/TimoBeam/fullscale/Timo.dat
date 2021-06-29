@@ -1,0 +1,37 @@
+<Nodes>
+0   0.0   0.0;
+1   1.0   0.0;
+2   2.0   0.0;
+3   3.0   0.0;
+4   3.0   0.5;
+5   2.0   0.5;
+6   1.0   0.5;
+7   0.0   0.5;
+8   0.0   1.0;
+9   1.0   1.0;
+10  2.0   1.0;
+11  3.0   1.0;
+</Nodes>
+
+<Elements>
+1		"ContElem1"		0   1   6   7;
+2		"ContElem1"		1   2   5   6;
+3		"ContElem1"		2   3   4   5;
+4		"ContElem1"		5   4   11  10;
+5		"ContElem1"		6   5   10  9;
+6		"ContElem1"		7   6   9   8;
+</Elements>
+
+<NodeConstraints>
+u[0] = 0.0;
+v[0] = 0.0;
+u[7] = 0.0;
+v[7] = 0.0;
+u[8] = 0.0;
+v[8] = 0.0;
+</NodeConstraints>
+
+<ExternalForces>
+u[11] = 0.0;
+v[11] = -20.0;
+</ExternalForces>

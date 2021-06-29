@@ -1,0 +1,5 @@
+<VTKFile byte_order='LittleEndian' type='Collection' version='0.1'>
+<Collection>
+<DataSet file='/home/minh/Documents/PHD/dev/homogenization/examples/hyperelastic_mM/hyperelastic_mM-0.vtu' groups='' part='0' timestep='0'/>
+</Collection>
+</VTKFile>
