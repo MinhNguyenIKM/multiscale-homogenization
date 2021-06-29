@@ -34,7 +34,7 @@ Setup:
 
 1. I assume that you have already downloaded the folder "multiscale-homogenization" and named it as "multiscale-homogenization". 
    - Type this command in your terminal: pwd
-   - This shown directory is your working directory denoted <workingdir>
+   - This shown directory is your working directory denoted by /<workingdir/>
 
 2. Setup environment with conda: conda create -n homo python=3.7
 
