@@ -37,13 +37,15 @@ Setup:
    - Type this command in your terminal: pwd
    - The shown message is your working directory denoted by \<workingdir\>
 
-2. Setup environment with conda: conda create -n homo python=3.7
+2. Setup environment with conda: conda create -n homo python=2
 
 3. Switch to homo environment to start working with this project: source activate homo
 
 4. Install some first necessary libraries: pip install numpy scipy matplotlib
 
-5. Setup PYTHONPATH environment by doing either a.(temporary use) or b.(permanent use):
+5. Go to the folder PyFEM\/pyfem-1.0 and install PyFEM by executing this command: python install.py. Afterwards, you just follow the appearing message.
+
+6. Setup PYTHONPATH environment for the "multiscale-homogenization" by doing either a.(temporary use) or b.(permanent use):
 
 a. export PYTHONPATH="$PYTHONPATH:\<workingdir\>"
 
