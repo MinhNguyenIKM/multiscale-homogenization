@@ -32,7 +32,8 @@ method for homogenization of elasticity at finite strain.
 ## Guideline to setup the working environment:
 Setup:
 
-1. I assume that you have already downloaded the folder "multiscale-homogenization" and named it as "multiscale-homogenization". 
+1. I assume that you have already downloaded the folder "multiscale-homogenization" and named it as "multiscale-homogenization".
+   - Go to the folder "multiscale-homogenization" which you just downloaded.
    - Type this command in your terminal: pwd
    - The shown message is your working directory denoted by \<workingdir\>
 
