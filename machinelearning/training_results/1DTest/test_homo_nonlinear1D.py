@@ -9,7 +9,7 @@ import time
 from microscale.fftgarlerkin import micro1D as micnl
 # import nn_1D as nn
 # import recovery1D as nn
-from machinelearning.training_results import recover_potential_energy as nn
+import recover_potential_energy as nn
 import fem1Dnonlinear as fem1Dnln
 from util import setup_plot
 

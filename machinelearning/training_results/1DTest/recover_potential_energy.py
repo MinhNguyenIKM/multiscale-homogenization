@@ -51,11 +51,11 @@ def cal_material_parameter2D(F_macro, type):
 	elif type == '2DLaminate':
 		filename = 'Laminate2_4_NNs.dat'
 	elif type == 'SaintVenant':
-		filename = '/home/minh/Documents/PHD/dev/homogenization/machinelearning/training_results/SaintVenant_4d_10com_10N_30000M_4_NNs.dat'
+		filename = './machinelearning/training_results/SaintVenant_4d_10com_10N_30000M_4_NNs.dat'
 	elif type == 'NeoHookean':
-		filename = '/home/minh/Documents/PHD/dev/homogenization/machinelearning/training_results/NeoHookean_4d_10com_10N_30000M_4_NNs.dat'
+		filename = './machinelearning/training_results/NeoHookean_4d_10com_10N_30000M_4_NNs.dat'
 	elif type =='Inclusion-NeoHookean2':
-		filename = '/home/minh/Documents/PHD/dev/homogenization/machinelearning/training_results/Inclusion_50x50_NeoHookean2/Inclusion_NeoHookean2_4d_15com_20N_80epoch_30000M_4_NNs.dat'
+		filename = './machinelearning/training_results/Inclusion_50x50_NeoHookean2/Inclusion_NeoHookean2_4d_15com_20N_80epoch_30000M_4_NNs.dat'
 	dimD, dimd, L, N, activation_func_type, min_input, max_input, min_max_output, \
 	A, w, c, b, d, d0 = fp.get_NN_parameters(filename)
 	F_macro = tramnnmx(F_macro.reshape(-1), min_input, max_input)
