@@ -28,3 +28,25 @@ in tandem with the Newton‐Raphson iteration and the conjugate‐gradient metho
 in the Lippmann‐Schwinger form without resorting to the reference medium. In this manner, the fixed‐point iteration that might require quite 
 strict numerical stability conditions in the nonlinear regime is avoided. In addition, we derive the projection operator used in the FFT‐based 
 method for homogenization of elasticity at finite strain.
+
+## Guideline to setup the working environment:
+Setup:
+
+1. I assume that you have already downloaded the folder "multiscale-homogenization" and named it as "multiscale-homogenization".
+   - Go to the folder "multiscale-homogenization" which you just downloaded (you can do it by cd command).
+   - Type this command in your terminal: pwd
+   - The shown message is your working directory denoted by \<workingdir\>
+
+2. Setup environment with conda: conda create -n homo python=2
+
+3. Switch to homo environment to start working with this project: source activate homo
+
+4. Install some first necessary libraries: pip install numpy scipy matplotlib
+
+5. Go to the folder PyFEM\/pyfem-1.0 and install PyFEM by executing this command: python install.py. Afterwards, you just follow the appearing message.
+
+6. Setup PYTHONPATH environment for the "multiscale-homogenization" by doing either a.(temporary use) or b.(permanent use):
+
+a. export PYTHONPATH="$PYTHONPATH:\<workingdir\>"
+
+b. add the above line to the end of file ~/.bashrc and execute "source ~/.bashrc"
