@@ -53,4 +53,3 @@ b. add the above line to the end of file ~/.bashrc and execute "source ~/.bashrc
 
 ### METHOD 2
 Execute the setup file install.py
-\>\>\> python install.py
