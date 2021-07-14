@@ -31,7 +31,7 @@ method for homogenization of elasticity at finite strain.
 
 ## Guideline to setup the working environment:
 Setup:
-
+### METHOD 1
 1. I assume that you have already downloaded the folder "multiscale-homogenization" and named it as "multiscale-homogenization".
    - Go to the folder "multiscale-homogenization" which you just downloaded (you can do it by cd command).
    - Type this command in your terminal: pwd
@@ -50,3 +50,7 @@ Setup:
 a. export PYTHONPATH="$PYTHONPATH:\<workingdir\>"
 
 b. add the above line to the end of file ~/.bashrc and execute "source ~/.bashrc"
+
+### METHOD 2
+Execute the setup file install.py
+>>> python install.py
