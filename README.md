@@ -151,7 +151,7 @@ Step 2. Place the output file ./dataFiles/training_data_1D_mechanics_nonlinear.d
    
 *ifTest = 0*
    
-a=RS_HDMR_NN('training_data_1D_mechanics_nonlinear.dat', 'training_data_1D_mechanics_nonlinear.dat', 'Mechanics1D_Nonlinear_1d_1com_5N_100M', [tolerance], [N], 200000*[1], npoints, [fns], neuron, cyclemax, epochsinseq, ifRegularisation, ifTestPtsSameFile, CoordTransformNeuron, PartialNNoutputNeuron, ifTest)*
+*a=RS_HDMR_NN('training_data_1D_mechanics_nonlinear.dat', 'training_data_1D_mechanics_nonlinear.dat', 'Mechanics1D_Nonlinear_1d_1com_5N_100M', [tolerance], [N], 200000*[1], npoints, [fns], neuron, cyclemax, epochsinseq, ifRegularisation, ifTestPtsSameFile, CoordTransformNeuron, PartialNNoutputNeuron, ifTest)*
    
 The results of the training (neural network's parameters) will be stored in the file Mechanics1D_Nonlinear_1d_1com_5N_100M.
    
