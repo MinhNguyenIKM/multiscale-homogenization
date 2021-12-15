@@ -13,7 +13,6 @@ Xiaoying Zhuang,
 
 Developement: ntvminh286@gmail.com (institute email: minh.nguyen@iop.uni-hannover.de)
 
-DOI: https://doi.org/10.1002/nme.6493
 
 <b>Abstract</b>:
 We propose a surrogate model for two‐scale computational homogenization of elastostatics at finite strains. 
@@ -162,5 +161,7 @@ Step 3: We have already trained the neural network and obtain the optimal networ
 *python test_homo_nonlinear1D.py*
    
 The file will automatically parse the neural networks's output to get the parameters and calculate the output with corresponding input as the mechanism of neural network, another part of this program is that it will call two-scale homogenization fe-fft and return the result. Please note that we should modify the dimension to 1D in file machinelearning/training_results/recover_potential_energy.py (dim=1).
-   
-file:///home/minh/Figure_1.png   
+
+![image](https://user-images.githubusercontent.com/34099527/146214315-1f226a34-3959-42d2-93a1-7b9f0906e13a.png)
+
+
