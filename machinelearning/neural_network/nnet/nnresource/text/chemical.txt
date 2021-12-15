@@ -1,0 +1,11 @@
+Predict one sensor measurement in a chemical process from eight other measurements, so the first sensor can be removed.
+
+An estimator can be found by Fitting the inputs and targets
+
+The data set consists of 498 samples.
+
+"chemicalInputs" is an 8x498 matrix, whose rows are eight sensor measurements.
+
+"chemicalTargets" is a 1x498 matrix of a ninth sensor measurement.
+
+----------

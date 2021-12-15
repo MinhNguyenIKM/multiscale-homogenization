@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- $Revision: 1.6.2.14 $  $Date: 2008/12/01 07:20:28 $ -->
+<demos>
+   <name>Neural Network</name>
+   <type>toolbox</type>
+   <icon>$toolbox/matlab/icons/matlabicon.gif</icon>
+   <description isCdata="no">
+<p>Neural Network Toolbox&#8482; extends MATLAB&#174; with tools for designing, 
+implementing, visualizing, and simulating neural networks. Neural networks 
+are invaluable for applications where formal analysis would be difficult or 
+impossible, such as pattern recognition and nonlinear system identification 
+and control. Neural Network Toolbox software provides comprehensive support for 
+many proven network paradigms, as well as graphical user interfaces (GUIs) 
+that enable you to design and manage your networks. The modular, open, and 
+extensible design of the toolbox simplifies the creation of customized 
+functions and networks.
+</p>
+</description>
+
+   <demosection>
+      <label>Neurons</label>
+      <demoitem>
+         <label>Simple Neuron and Transfer Functions</label>
+         <type>M-GUI</type>
+         <source>nnd2n1</source>
+      </demoitem>
+      <demoitem>
+         <label>Neuron with Vector Input</label>
+         <source>nnd2n2</source>
+         <type>M-GUI</type>
+      </demoitem>
+   </demosection>
+
+   <demosection>
+      <label>Perceptrons</label>
+      <demoitem>
+         <label>Decision Boundaries</label>
+         <source>nnd4db</source>
+         <type>M-GUI</type>
+      </demoitem>
+      <demoitem>
+         <label>Perceptron Learning Rule</label>
+         <source>nnd4pr</source>
+         <type>M-GUI</type>
+      </demoitem>
+      <demoitem>
+         <label>Classification with a 2-Input Perceptron</label>
+         <source>demop1</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>Outlier Input Vectors</label>
+         <source>demop4</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>Normalized Perceptron Rule</label>
+         <source>demop5</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>Linearly Non-separable Vectors</label>
+         <source>demop6</source>
+         <type>M-file</type>
+      </demoitem>
+   </demosection>
+
+   <demosection>
+      <label>Linear Networks</label>
+      <demoitem>
+         <label>Pattern Association Showing Error Surface</label>
+         <source>demolin1</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>Training a Linear Neuron</label>
+         <source>demolin2</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>Linear Classification System</label>
+         <source>nnd10lc</source>
+         <type>M-GUI</type>
+      </demoitem>
+      <demoitem>
+         <label>Adaptive Noise Cancellation</label>
+         <source>demolin8</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>Adaptive Noise Cancellation in Airplane</label>
+         <source>nnd10nc</source>
+         <type>M-GUI</type>
+      </demoitem>
+      <demoitem>
+         <label>Linear Fit of Nonlinear Problem</label>
+         <source>demolin4</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>Underdetermined Problem</label>
+         <source>demolin5</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>Linearly Dependent Problem</label>
+         <source>demolin6</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>Too Large a Learning Rate</label>
+         <source>demolin7</source>
+         <type>M-file</type>
+      </demoitem>
+   </demosection>
+
+   <demosection>
+      <label>Backpropagation</label>
+      <demoitem>
+         <label>Generalization</label>
+         <source>nnd11gn</source>
+         <type>M-GUI</type>
+      </demoitem>
+      <demoitem>
+         <label>Steepest Descent Backpropagation</label>
+         <source>nnd12sd1</source>
+         <type>M-GUI</type>
+      </demoitem>
+      <demoitem>
+         <label>Momentum Backpropagation</label>
+         <source>nnd12mo</source>
+         <type>M-GUI</type>
+      </demoitem>
+      <demoitem>
+         <label>Variable Learning Rate Backpropagation</label>
+         <source>nnd12vl</source>
+         <type>M-GUI</type>
+      </demoitem>
+      <demoitem>
+         <label>Conjugate Gradient Backpropagation</label>
+         <source>nnd12cg</source>
+         <type>M-GUI</type>
+      </demoitem>
+      <demoitem>
+         <label>Marquardt-Levenberg Backpropagation</label>
+         <source>nnd12m</source>
+         <type>M-GUI</type>
+      </demoitem>
+   </demosection>
+
+   <demosection>
+      <label>Radial Basis Networks</label>
+      <demoitem>
+         <label>Radial Basis Approximation</label>
+         <source>demorb1</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>Radial Basis Underlapping Neurons</label>
+         <source>demorb3</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>Radial Basis Overlapping Neurons</label>
+         <source>demorb4</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>GRNN Function Approximation</label>
+         <source>demogrn1</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>PNN Classification</label>
+         <source>demopnn1</source>
+         <type>M-file</type>
+      </demoitem>
+   </demosection>
+
+   <demosection>
+      <label>Self-organizing Networks</label>
+      <demoitem>
+         <label>Competitive Learning</label>
+         <source>democ1</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>One-Dimensional Self-organizing Map</label>
+         <source>demosm1</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>Two-Dimensional Self-organizing Map</label>
+         <source>demosm2</source>
+         <type>M-file</type>
+      </demoitem>
+   </demosection>
+
+   <demosection>
+      <label>LVQ Networks</label>
+      <demoitem>
+         <label>Learning Vector Quantization</label>
+         <source>demolvq1</source>
+         <type>M-file</type>
+      </demoitem>
+   </demosection>
+   <demosection>
+      <label>Hopfield Networks</label>
+      <demoitem>
+         <label>Hopfield Two Neuron Design</label>
+         <source>demohop1</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>Hopfield Unstable Equilibria</label>
+         <source>demohop2</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>Hopfield Three Neuron Design</label>
+         <source>demohop3</source>
+         <type>M-file</type>
+      </demoitem>
+      <demoitem>
+         <label>Hopfield Spurious Stable Points</label>
+         <source>demohop4</source>
+         <type>M-file</type>
+      </demoitem>
+   </demosection>
+
+   <demosection>
+      <label>Application Examples</label>
+      <demoitem>
+         <label>Linear Design (command-line)</label>
+         <type>other</type>
+         <callback>applin1</callback>
+      </demoitem>
+      <demoitem>
+         <label>Adaptive Linear Prediction (command-line)</label>
+         <type>other</type>
+         <callback>applin2</callback>
+      </demoitem>
+      <demoitem>
+         <label>Elman Amplitude Detection (command-line)</label>
+         <type>other</type>
+         <callback>appelm1</callback>
+      </demoitem>
+      <demoitem>
+         <label>Character Recognition (command-line)</label>
+         <type>other</type>
+         <callback>appcr1</callback>
+      </demoitem>
+      <demoitem>
+         <label>Cancer Detection</label>
+         <type>M-file</type>
+         <source>cancerdetectdemonnet</source>
+         <dependency>Bioinformatics</dependency>
+      </demoitem>
+      <demoitem>
+         <label>Crab Classification</label>
+         <type>M-file</type>
+         <source>crabclassify</source>
+      </demoitem>
+      <demoitem>
+         <label>Gene Expression Analysis</label>
+         <type>M-file</type>
+         <source>yeastdemonnet</source>
+         <dependency>Bioinformatics</dependency>
+      </demoitem>
+   </demosection>
+
+   <demosection>
+      <label>Control Systems</label>
+      <demoitem>
+         <label>Predictive Control of a Tank Reactor</label>
+         <type>model</type>
+         <source>predcstr</source>
+         <dependency>Simulink</dependency>
+      </demoitem>
+      <demoitem>
+         <label>NARMA-L2 Control of a Magnet Levitation System</label>
+         <type>model</type>
+         <source>narmamaglev</source>
+         <dependency>Simulink</dependency>
+      </demoitem>
+      <demoitem>
+         <label>Reference Control of a Robot Arm</label>
+         <type>model</type>
+         <source>mrefrobotarm</source>
+         <dependency>Simulink</dependency>
+      </demoitem>
+   </demosection>
+
+   <demosection>
+      <label>Other Demos</label>
+      <demoitem>
+         <label>Other Neural Network Design Textbook Demos</label>
+         <type>M-GUI</type>
+         <source>nnd</source>
+      </demoitem>
+   </demosection>
+
+</demos>
+
+
+

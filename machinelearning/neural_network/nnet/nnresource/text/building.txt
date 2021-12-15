@@ -1,0 +1,18 @@
+Predict the energy usage of a house, based on time of day and various weather variables.
+
+An estimator can be found by Fitting the inputs and targets
+
+The data set consists of 4209 samples.
+
+"buildingInputs" is an 14x4208 matrix, whose rows are:
+
+1-10: Coded day of the week, time of day
+11: Temperature
+12: Humidity
+13: Solar strength
+14: Wind
+
+"buildingTargets" is a 3x4208 matrix of energy usage.
+
+----------
+

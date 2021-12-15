@@ -1,0 +1,96 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Hopfield Spurious Stable Points</title>
+      <meta name="generator" content="MATLAB 7.8">
+      <meta name="date" content="2009-01-19">
+      <meta name="m-file" content="demohop4">
+      <link rel="stylesheet" type="text/css" href="../../../matlab/demos/private/style.css">
+   </head>
+   <body>
+      <div class="header">
+         <div class="left"><a href="matlab:edit demohop4">Open demohop4.m in the Editor</a></div>
+         <div class="right"><a href="matlab:echodemo demohop4">Run in the Command Window</a></div>
+      </div>
+      <div class="content">
+         <h1>Hopfield Spurious Stable Points</h1>
+         <!--introduction-->
+         <p>A Hopfield network with five neurons is designed to have four stable equilibria.  However, unavoidably, it has other undesired
+            equilibria.
+         </p>
+         <!--/introduction-->
+         <p>We would like to obtain a Hopfield network that has the four stable points defined by the two target (column) vectors in T.</p><pre class="codeinput">T = [+1 +1 -1 +1; <span class="keyword">...</span>
+      -1 +1 +1 -1; <span class="keyword">...</span>
+      -1 -1 -1 +1; <span class="keyword">...</span>
+      +1 +1 +1 +1; <span class="keyword">...</span>
+      -1 -1 +1 +1];
+</pre><p>The function NEWHOP creates Hopfield networks given the stable points T.</p><pre class="codeinput">net = newhop(T);
+</pre><p>Here we define 4 random starting points and simulate the Hopfield network for 50 steps.</p>
+         <p>Some initial conditions will lead to desired stable points.  Others will lead to undesired stable points.</p><pre class="codeinput">P = {rands(5,4)};
+[Y,Pf,Af] = sim(net,{4 50},{},P);
+Y{end}
+</pre><pre class="codeoutput">
+ans =
+
+     1     1     1    -1
+     1    -1    -1    -1
+     1    -1     1    -1
+     1     1     1     1
+     1    -1     1     1
+
+</pre><p class="footer">Copyright 1992-2008 The MathWorks, Inc.<br>
+            Published with MATLAB&reg; 7.8
+         </p>
+         <p class="footer" id="trademarks">MATLAB and Simulink are registered trademarks of The MathWorks, Inc.  Please see <a href="http://www.mathworks.com/trademarks">www.mathworks.com/trademarks</a> for a list of other trademarks owned by The MathWorks, Inc.  Other product or brand names are trademarks or registered trademarks
+            of their respective owners.
+         </p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Hopfield Spurious Stable Points
+% A Hopfield network with five neurons is designed to have four stable
+% equilibria.  However, unavoidably, it has other undesired equilibria.
+% 
+% Copyright 1992-2008 The MathWorks, Inc.
+% $Revision: 1.18.2.2 $  $Date: 2008/04/06 19:16:42 $
+
+%%
+% We would like to obtain a Hopfield network that has the four stable points
+% defined by the two target (column) vectors in T.
+
+T = [+1 +1 -1 +1; ...
+      -1 +1 +1 -1; ... 
+      -1 -1 -1 +1; ...
+      +1 +1 +1 +1; ...
+      -1 -1 +1 +1];
+
+%%
+% The function NEWHOP creates Hopfield networks given the stable points T.
+
+net = newhop(T);
+
+%%
+% Here we define 4 random starting points and simulate the Hopfield network for
+% 50 steps.
+%
+% Some initial conditions will lead to desired stable points.  Others will lead
+% to undesired stable points.
+
+P = {rands(5,4)};
+[Y,Pf,Af] = sim(net,{4 50},{},P);
+Y{end}
+
+
+displayEndOfDemoMessage(mfilename)
+##### SOURCE END #####
+-->
+   </body>
+</html>

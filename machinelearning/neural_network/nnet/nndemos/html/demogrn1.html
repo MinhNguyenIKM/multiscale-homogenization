@@ -1,0 +1,132 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>GRNN Function Approximation</title>
+      <meta name="generator" content="MATLAB 7.8">
+      <meta name="date" content="2009-01-19">
+      <meta name="m-file" content="demogrn1">
+      <link rel="stylesheet" type="text/css" href="../../../matlab/demos/private/style.css">
+   </head>
+   <body>
+      <div class="header">
+         <div class="left"><a href="matlab:edit demogrn1">Open demogrn1.m in the Editor</a></div>
+         <div class="right"><a href="matlab:echodemo demogrn1">Run in the Command Window</a></div>
+      </div>
+      <div class="content">
+         <h1>GRNN Function Approximation</h1>
+         <!--introduction-->
+         <p>This demonstration uses functions NEWGRNN and SIM.</p>
+         <!--/introduction-->
+         <p>Here are eight data points of a function we would like to fit.  The functions inputs P should result in target outputs T.</p><pre class="codeinput">P = [1 2 3 4 5 6 7 8];
+T = [0 1 2 3 2 1 2 1];
+
+plot(P,T,<span class="string">'.'</span>,<span class="string">'markersize'</span>,30)
+axis([0 9 -1 4])
+title(<span class="string">'Function to approximate.'</span>)
+xlabel(<span class="string">'P'</span>)
+ylabel(<span class="string">'T'</span>)
+</pre><img vspace="5" hspace="5" src="demogrn1_01.png" alt=""> <p>We use NEWGRNN to create a generalized regression network.  We use a SPREAD slightly lower than 1, the distance between input
+            values, in order, to get a function that fits individual data points fairly closely.  A smaller spread would fit data better
+            but be less smooth.
+         </p><pre class="codeinput">spread = 0.7;
+net = newgrnn(P,T,spread);
+A = sim(net,P);
+
+hold <span class="string">on</span>
+outputline = plot(P,A,<span class="string">'.'</span>,<span class="string">'markersize'</span>,30,<span class="string">'color'</span>,[1 0 0]);
+title(<span class="string">'Create and test a network.'</span>)
+xlabel(<span class="string">'P'</span>)
+ylabel(<span class="string">'T and A'</span>)
+</pre><img vspace="5" hspace="5" src="demogrn1_02.png" alt=""> <p>We can use the network to approximate the function at a new input value.</p><pre class="codeinput">p = 3.5;
+a = sim(net,p);
+plot(p,a,<span class="string">'.'</span>,<span class="string">'markersize'</span>,30,<span class="string">'color'</span>,[1 0 0]);
+title(<span class="string">'New input value.'</span>)
+xlabel(<span class="string">'P and p'</span>)
+ylabel(<span class="string">'T and a'</span>)
+</pre><img vspace="5" hspace="5" src="demogrn1_03.png" alt=""> <p>Here the network's response is simulated for many values, allowing us to see the function it represents.</p><pre class="codeinput">P2 = 0:.1:9;
+A2 = sim(net,P2);
+plot(P2,A2,<span class="string">'linewidth'</span>,4,<span class="string">'color'</span>,[1 0 0])
+title(<span class="string">'Function to approximate.'</span>)
+xlabel(<span class="string">'P and P2'</span>)
+ylabel(<span class="string">'T and A2'</span>)
+</pre><img vspace="5" hspace="5" src="demogrn1_04.png" alt=""> <p class="footer">Copyright 1992-2005 The MathWorks, Inc.<br>
+            Published with MATLAB&reg; 7.8
+         </p>
+         <p class="footer" id="trademarks">MATLAB and Simulink are registered trademarks of The MathWorks, Inc.  Please see <a href="http://www.mathworks.com/trademarks">www.mathworks.com/trademarks</a> for a list of other trademarks owned by The MathWorks, Inc.  Other product or brand names are trademarks or registered trademarks
+            of their respective owners.
+         </p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% GRNN Function Approximation
+% This demonstration uses functions NEWGRNN and SIM.
+%
+% Copyright 1992-2005 The MathWorks, Inc.
+% $Revision: 1.7.2.1 $  $Date: 2005/11/15 01:15:02 $
+
+%%
+% Here are eight data points of a function we would like to fit.  The functions
+% inputs P should result in target outputs T.
+
+P = [1 2 3 4 5 6 7 8];
+T = [0 1 2 3 2 1 2 1];
+
+plot(P,T,'.','markersize',30)
+axis([0 9 -1 4])
+title('Function to approximate.')
+xlabel('P')
+ylabel('T')
+
+
+%%
+% We use NEWGRNN to create a generalized regression network.  We use a SPREAD
+% slightly lower than 1, the distance between input values, in order, to get a
+% function that fits individual data points fairly closely.  A smaller spread
+% would fit data better but be less smooth.
+
+spread = 0.7;
+net = newgrnn(P,T,spread);
+A = sim(net,P);
+
+hold on
+outputline = plot(P,A,'.','markersize',30,'color',[1 0 0]);
+title('Create and test a network.')
+xlabel('P')
+ylabel('T and A')
+
+%%
+% We can use the network to approximate the function at a new input value.
+
+p = 3.5;
+a = sim(net,p);
+plot(p,a,'.','markersize',30,'color',[1 0 0]);
+title('New input value.')
+xlabel('P and p')
+ylabel('T and a')
+
+
+%%
+% Here the network's response is simulated for many values, allowing us to see
+% the function it represents.
+
+P2 = 0:.1:9;
+A2 = sim(net,P2);
+plot(P2,A2,'linewidth',4,'color',[1 0 0])
+title('Function to approximate.')
+xlabel('P and P2')
+ylabel('T and A2')
+
+
+displayEndOfDemoMessage(mfilename)
+##### SOURCE END #####
+-->
+   </body>
+</html>

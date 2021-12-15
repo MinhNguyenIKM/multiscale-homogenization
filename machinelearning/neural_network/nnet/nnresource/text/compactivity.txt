@@ -1,0 +1,37 @@
+Predict the portion of time a computer runs in user mode based on 21 other computer statistics.
+
+An estimator can be found by Fitting the inputs and targets
+
+This data set has 7898 samples.
+
+"compactivityInputs" is a 21x7898 matrix with these rows:
+
+1. Reads (transfers per second ) between system memory and user memory
+2. Writes (transfers per second) between system memory and user memory
+3. # of system calls of all types per second
+4. # of system read calls per second .
+5. # of system write calls per second .
+6. # of system fork calls per second.
+7. # of system exec calls per second.
+8. # of characters transferred per second by system read calls
+9. # of characters transfreed per second by system write calls
+10. # of page out requests per second
+11. # of pages, paged out per second
+12. # of pages per second placed on the free list.
+13. # of pages checked if they can be freed per second
+14. # of page attaches (satisfying a page fault by reclaiming a page in memory) per sec
+15. # of page-in requests per second
+16. # of pages paged in per second
+17. # of page faults caused by protection errors (copy-on-writes).
+18. # of page faults caused by address translation .
+19. Process run queue size
+20. # of memory pages available to user processes
+21. # of disk blocks available for page swapping.
+
+"compactivityTargets" is a 1x7898 matrix of proportional times computers ran in user mode.
+
+----------
+
+This data is available from:
+
+http://www.cs.utoronto.ca/~delve/data/datasets.html

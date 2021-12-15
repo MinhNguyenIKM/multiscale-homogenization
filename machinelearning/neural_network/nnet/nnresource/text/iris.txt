@@ -1,0 +1,30 @@
+Classify iris flowers based on four attributes.
+
+Samples may be classified using clustering (using only input data) or with Pattern Recognition or Fitting (with input and target data).
+
+The data set consists of 150 samples.
+
+"irisInputs" is an 4x150 matrix, whose rows are:
+
+1. Sepal length in cm
+2. Sepal width in cm
+3. Petal length in cm
+4. Petal width in cm
+
+"irisTargets" is an 3x150 matrix, where each ith column indicates which category the ith iris belongs to with a 1 in one element (and zeros in the other two elements).
+
+1. Iris Setosa
+2. Iris Versicolour
+3. Iris Virginica
+
+One category of iris is linearly separable, the other two are not.
+
+----------
+
+This data is available from the UCI Machine Learning Repository.
+
+http://mlearn.ics.uci.edu/MLRepository.html
+
+Murphy,P.M., Aha, D.W. (1994). UCI Repository of machine learning databases [http://www.ics.uci.edu/~mlearn/MLRepository.html]. Irvine, CA: University of California,  Department of Information and Computer Science.
+
+From R.A. Fisher.

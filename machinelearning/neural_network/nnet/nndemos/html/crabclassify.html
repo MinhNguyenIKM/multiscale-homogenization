@@ -1,0 +1,313 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Crab Classification</title>
+      <meta name="generator" content="MATLAB 7.8">
+      <meta name="date" content="2009-01-19">
+      <meta name="m-file" content="crabclassify">
+      <link rel="stylesheet" type="text/css" href="../../../matlab/demos/private/style.css">
+   </head>
+   <body>
+      <div class="header">
+         <div class="left"><a href="matlab:edit crabclassify">Open crabclassify.m in the Editor</a></div>
+         <div class="right"><a href="matlab:echodemo crabclassify">Run in the Command Window</a></div>
+      </div>
+      <div class="content">
+         <h1>Crab Classification</h1>
+         <!--introduction-->
+         <p>This demo illustrates using a neural network as a classifier to identify the sex of crabs from physical dimensions of the
+            crab.
+         </p>
+         <!--/introduction-->
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#1">The Problem: Classification of Crabs</a></li>
+               <li><a href="#2">Why Neural Networks?</a></li>
+               <li><a href="#3">Preparing the Data</a></li>
+               <li><a href="#6">Building the Neural Network Classifier</a></li>
+               <li><a href="#9">Testing the Classifier</a></li>
+            </ul>
+         </div>
+         <h2>The Problem: Classification of Crabs<a name="1"></a></h2>
+         <p>In this demo we attempt to build a classifier that can identify the sex of a crab from its physical measurements. Six physical
+            characterstics of a crab are considered: species, frontallip, rearwidth, length, width and depth. The problem on hand is to
+            identify the sex of a crab given the observed values for each of these 6 physical characterstics.
+         </p>
+         <h2>Why Neural Networks?<a name="2"></a></h2>
+         <p>Neural networks have proven themselves as proficient classifiers and are particularly well suited for addressing non-linear
+            problems. Given the non-linear nature of real world phenomena, like crab classification, neural networks is certainly a good
+            candidate for solving the problem.
+         </p>
+         <p>The six physical characterstics will act as inputs to a neural network and the sex of the crab will be target. Given an input,
+            which constitutes the six observed values for the physical characterstics of a crab, the neural network is expected to identify
+            if the crab is male or female.
+         </p>
+         <p>This is achieved by presenting previously recorded inputs to a neural network and then tuning it to produce the desired target
+            outputs. This process is called neural network training.
+         </p>
+         <h2>Preparing the Data<a name="3"></a></h2>
+         <p>Data for classification problems can very often have textual or non-numeric information. In our case, sex of the crab is non-numeric
+            (Male/Female). Neural networks however cannot be trained with non-numeric data. Hence we need to translate the textual data
+            into a numeric form.
+         </p>
+         <p>There are several ways to translate textual or symbolic data into numeric data. Some of the common symbol translation techniques
+            used are unary encoding, binary encoding and numbering classes. We are going to use unary encoding in this demo to perform
+            symbol translation.
+         </p><pre class="codeinput">fid = fopen(<span class="string">'private/crabdata.csv'</span>);
+C = textscan(fid,<span class="string">'%f%f%f%f%f%f%s'</span>,<span class="string">'delimiter'</span>,<span class="string">','</span>);  <span class="comment">% Import data</span>
+fclose(fid);
+</pre><p>The first 6 columns of data represent the crab's physical characterstics. The 7th column represents the sex of the crab.</p><pre class="codeinput">physchars = [C{1} C{2} C{3} C{4} C{5} C{6}]; <span class="comment">% inputs to neural network</span>
+
+female = strncmpi(C{7}, <span class="string">'Female'</span>, 1);
+male = strncmpi(C{7}, <span class="string">'Male'</span>, 1);
+
+sex = double([female male]);                 <span class="comment">% targets for neural network</span>
+</pre><p>'Female' is now represented by the vector [1 0] and 'Male' is represented by the vector [0 1]. This process is called unary
+            encoding. The neural network will now be trained to produce a [1 0] output for 'Female' crabs and [0 1] output for 'Male'
+            crabs.
+         </p>
+         <p>We could also have used numbers to represent the two sexes (Male=1, Female=2) or performed binary encoding (Male=[0 0], Female=[0
+            1]).
+         </p>
+         <p>The next step is to preprocess the data into a form that can be used with a neural network.</p>
+         <p>The neural network object in the toolbox expects the samples along columns and its features along rows. Our dataset has its
+            samples along rows and its features along columns. Hence the matrices have to be transposed.
+         </p><pre class="codeinput">physchars = physchars';
+sex = sex';
+</pre><h2>Building the Neural Network Classifier<a name="6"></a></h2>
+         <p>The next step is to create a neural network that will learn to identify the sex of the crabs.</p>
+         <p>Since the neural network starts with random initial weights, the results of this demo will differ slightly every time it is
+            run. The random seed is set to avoid this randomness. However this is not necessary for your own applications.
+         </p><pre class="codeinput">rand(<span class="string">'seed'</span>, 491218382)
+</pre><p>A 1-hidden layer feed forward network is created with 20 neurons in the hidden layer.</p><pre class="codeinput">net = newff(physchars,sex,20); <span class="comment">% Create a new feed forward network</span>
+</pre><p>Now the network is ready to be trained. The samples are automatically divided into training, validation and test sets. The
+            training set is used to teach the network. Training continues as long as the network continues improving on the validation
+            set. The test set provides a completely independent measure of network accuracy.
+         </p><pre class="codeinput">[net,tr] = train(net,physchars,sex);
+</pre><h2>Testing the Classifier<a name="9"></a></h2>
+         <p>The trained neural network can now be tested with the testing samples This will give us a sense of how well the network will
+            do when applied to data from the real world.
+         </p><pre class="codeinput">testInputs = physchars(:,tr.testInd);
+testTargets = sex(:,tr.testInd);
+
+out = sim(net,testInputs);        <span class="comment">% Get response from trained network</span>
+</pre><p>The network response can now be compared against the desired target response to build the classification matrix which will
+            provides a comprehensive picture of a classifiers performance.
+         </p><pre class="codeinput">[y_out,I_out] = max(out);
+[y_t,I_t] = max(testTargets);
+
+diff = [I_t - 2*I_out];
+
+f_f = length(find(diff==-1));     <span class="comment">% Female crabs classified as Female</span>
+f_m = length(find(diff==0));      <span class="comment">% Female crabs classified as Male</span>
+m_m = length(find(diff==-2));     <span class="comment">% Male crabs classified as Male</span>
+m_f = length(find(diff==-3));      <span class="comment">% Male crabs classified as Female</span>
+
+N = size(testInputs,2);               <span class="comment">% Number of testing samples</span>
+fprintf(<span class="string">'Total testing samples: %d\n'</span>, N);
+
+cm = [f_f f_m; m_f m_m]           <span class="comment">% classification matrix</span>
+</pre><pre class="codeoutput">Total testing samples: 40
+
+cm =
+
+    18     0
+     1    21
+
+</pre><p>The classification matrix provides a comprehensive picture of the classification performance of the classifier. The ideal
+            classification matrix is the one in which the sum of the diagonal is equal to the number of samples.
+         </p>
+         <p>It can also be understood in terms of percentages. The following matrix provides the same information as above but in terms
+            of percentages.
+         </p><pre class="codeinput">cm_p = (cm ./ N) .* 100          <span class="comment">% classification matrix in percentages</span>
+
+fprintf(<span class="string">'Percentage Correct classification   : %f%%\n'</span>, 100*(cm(1,1)+cm(2,2))/N);
+fprintf(<span class="string">'Percentage Incorrect classification : %f%%\n'</span>, 100*(cm(1,2)+cm(2,1))/N);
+</pre><pre class="codeoutput">
+cm_p =
+
+   45.0000         0
+    2.5000   52.5000
+
+Percentage Correct classification   : 97.500000%
+Percentage Incorrect classification : 2.500000%
+</pre><p>This demo illustrated using a neural network to classify crabs.</p>
+         <p>Explore other demos and the documentation for more insight into neural networks and its applications.</p>
+         <p class="footer">Copyright 2003-2008 The MathWorks, Inc.<br>
+            Published with MATLAB&reg; 7.8
+         </p>
+         <p class="footer" id="trademarks">MATLAB and Simulink are registered trademarks of The MathWorks, Inc.  Please see <a href="http://www.mathworks.com/trademarks">www.mathworks.com/trademarks</a> for a list of other trademarks owned by The MathWorks, Inc.  Other product or brand names are trademarks or registered trademarks
+            of their respective owners.
+         </p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Crab Classification
+% This demo illustrates using a neural network as a classifier to identify
+% the sex of crabs from physical dimensions of the crab.
+
+%   Copyright 2003-2008 The MathWorks, Inc.
+%   $Revision: 1.1.8.10 $  $Date: 2008/06/20 08:04:08 $ 
+
+
+%% The Problem: Classification of Crabs
+% In this demo we attempt to build a classifier that can identify the sex
+% of a crab from its physical measurements. Six physical characterstics of
+% a crab are considered: species, frontallip, rearwidth, length, width and
+% depth. The problem on hand is to identify the sex of a crab given the
+% observed values for each of these 6 physical characterstics.
+%
+%% Why Neural Networks?
+% Neural networks have proven themselves as proficient classifiers and are
+% particularly well suited for addressing non-linear problems. Given the
+% non-linear nature of real world phenomena, like crab classification,
+% neural networks is certainly a good candidate for solving the problem.
+%
+% The six physical characterstics will act as inputs to a neural network
+% and the sex of the crab will be target. Given an input, which constitutes
+% the six observed values for the physical characterstics of a crab, the
+% neural network is expected to identify if the crab is male or female.
+%
+% This is achieved by presenting previously recorded inputs to a neural
+% network and then tuning it to produce the desired target outputs. This
+% process is called neural network training.
+%
+%% Preparing the Data
+% Data for classification problems can very often have textual or
+% non-numeric information. In our case, sex of the crab is non-numeric
+% (Male/Female). Neural networks however cannot be trained with non-numeric
+% data. Hence we need to translate the textual data into a numeric form. 
+%
+% There are several ways to translate textual or symbolic data into numeric
+% data. Some of the common symbol translation techniques used are unary
+% encoding, binary encoding and numbering classes. We are going to use
+% unary encoding in this demo to perform symbol translation. 
+
+fid = fopen('private/crabdata.csv');
+C = textscan(fid,'%f%f%f%f%f%f%s','delimiter',',');  % Import data
+fclose(fid);
+
+%%
+% The first 6 columns of data represent the crab's physical characterstics.
+% The 7th column represents the sex of the crab.
+
+physchars = [C{1} C{2} C{3} C{4} C{5} C{6}]; % inputs to neural network
+
+female = strncmpi(C{7}, 'Female', 1);
+male = strncmpi(C{7}, 'Male', 1);
+
+sex = double([female male]);                 % targets for neural network
+
+%%
+% 'Female' is now represented by the vector [1 0] and 'Male' is represented
+% by the vector [0 1]. This process is called unary encoding. The neural
+% network will now be trained to produce a [1 0] output for 'Female' crabs
+% and [0 1] output for 'Male' crabs.
+%
+% We could also have used numbers to represent the two sexes (Male=1,
+% Female=2) or performed binary encoding (Male=[0 0], Female=[0 1]).
+%
+% The next step is to preprocess the data into a form that can be used with
+% a neural network.
+%
+% The neural network object in the toolbox expects the samples along
+% columns and its features along rows. Our dataset has its samples along
+% rows and its features along columns. Hence the matrices have to be
+% transposed.
+
+physchars = physchars';
+sex = sex';
+
+%% Building the Neural Network Classifier
+% The next step is to create a neural network that will learn to identify
+% the sex of the crabs.
+%
+% Since the neural network starts with random initial weights, the results
+% of this demo will differ slightly every time it is run. The random seed
+% is set to avoid this randomness. However this is not necessary for your
+% own applications.
+
+rand('seed', 491218382)
+
+%%
+% A 1-hidden layer feed forward network is created with 20 neurons in the
+% hidden layer.
+%
+
+net = newff(physchars,sex,20); % Create a new feed forward network
+
+%%
+% Now the network is ready to be trained. The samples are automatically
+% divided into training, validation and test sets. The training set is
+% used to teach the network. Training continues as long as the network
+% continues improving on the validation set. The test set provides a
+% completely independent measure of network accuracy.
+
+[net,tr] = train(net,physchars,sex);
+
+%% Testing the Classifier
+% The trained neural network can now be tested with the testing samples
+% This will give us a sense of how well the network will do when applied
+% to data from the real world.
+
+testInputs = physchars(:,tr.testInd);
+testTargets = sex(:,tr.testInd);
+
+out = sim(net,testInputs);        % Get response from trained network
+
+%%
+% The network response can now be compared against the desired target
+% response to build the classification matrix which will provides a
+% comprehensive picture of a classifiers performance.
+
+[y_out,I_out] = max(out);
+[y_t,I_t] = max(testTargets);
+
+diff = [I_t - 2*I_out];
+
+f_f = length(find(diff==-1));     % Female crabs classified as Female
+f_m = length(find(diff==0));      % Female crabs classified as Male
+m_m = length(find(diff==-2));     % Male crabs classified as Male
+m_f = length(find(diff==-3));      % Male crabs classified as Female
+
+N = size(testInputs,2);               % Number of testing samples
+fprintf('Total testing samples: %d\n', N);
+
+cm = [f_f f_m; m_f m_m]           % classification matrix
+
+%%
+% The classification matrix provides a comprehensive picture of the
+% classification performance of the classifier. The ideal classification
+% matrix is the one in which the sum of the diagonal is equal to the number
+% of samples.
+%
+% It can also be understood in terms of percentages. The following matrix
+% provides the same information as above but in terms of percentages. 
+
+cm_p = (cm ./ N) .* 100          % classification matrix in percentages
+
+fprintf('Percentage Correct classification   : %f%%\n', 100*(cm(1,1)+cm(2,2))/N);
+fprintf('Percentage Incorrect classification : %f%%\n', 100*(cm(1,2)+cm(2,1))/N);
+
+%%
+% This demo illustrated using a neural network to classify crabs.
+%
+% Explore other demos and the documentation for more insight into neural
+% networks and its applications. 
+
+
+
+displayEndOfDemoMessage(mfilename)
+##### SOURCE END #####
+-->
+   </body>
+</html>

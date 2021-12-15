@@ -1,0 +1,25 @@
+Predict the percentage of body fat for an individual, based on various body characteristics.
+
+An estimator can be found by Fitting the inputs and targets
+
+The data set consists of 252 samples
+
+"bodyfatInputs" is a 13x252 matrix whose rows are:
+
+ 1. Age (years)
+ 2. Weight (lbs)
+ 3. Height (inches)
+ 4. Neck circumference (cm)
+ 5. Chest circumference (cm)
+ 6. Abdomen 2 circumference (cm)
+ 7. Hip circumference (cm)
+ 8. Thigh circumference (cm)
+ 9. Knee circumference (cm)
+10. Ankle circumference (cm)
+11. Biceps (extended) circumference (cm)
+12. Forearm circumference (cm)
+13. Wrist circumference (cm)
+
+"bodyfatTargets" is a 1x252 matrix of body fat percentages.
+
+----------

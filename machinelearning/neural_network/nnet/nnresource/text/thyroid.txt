@@ -1,0 +1,23 @@
+Classify patients referred to a clinic as normal (not hypothyroid), hyperfunction or subnormal functioning, based on 21 patient measurements.
+
+Samples may be classified using clustering (using only input data) or with Pattern Recognition or Fitting (with input and target data).
+
+The data set consists of 7200 samples.
+
+"thyroidInputs" is an 21x7200 matrix, whose rows are consist of 15 binary and 6 continuous patient attributes.
+
+"thyroidTargets" is a 3x7200 matrix, where in each column indicates the correct category with a 1 in one element (and zeros in the two other elements).
+
+1. Not hyperthyroid
+2. Hyperfunction
+3. Subnormal functioning
+
+----------
+
+This data is available from the UCI Machine Learning Repository.
+
+http://mlearn.ics.uci.edu/MLRepository.html
+
+Murphy,P.M., Aha, D.W. (1994). UCI Repository of machine learning databases [http://www.ics.uci.edu/~mlearn/MLRepository.html]. Irvine, CA: University of California,  Department of Information and Computer Science.
+
+From Garavan Institute.

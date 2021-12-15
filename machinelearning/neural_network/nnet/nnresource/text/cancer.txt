@@ -1,0 +1,32 @@
+Classify whether a breast tumor is benign or malignant based on nine characteristics of sample biopsies.
+
+Samples may be classified using clustering (using only input data) or with Pattern Recognition or Fitting (with input and target data).
+
+The data set consists of 699 samples.
+
+"cancerInputs" is an 9x699 matrix, whose rows are biopsy characteristics:
+
+1. Clump Thickness
+2. Uniformity of Cell Size
+3. Uniformity of Cell Shape
+4. Marginal Adhesion
+5. Single Epithelial Cell Size
+6. Bare Nuclei
+7. Bland Chromatin
+8. Normal Nucleoli
+9. Mitoses
+
+"cancerTargets" is a 2x966 matrix, where each column indicates the correct category with a 1 in one element (and a zero in the other).
+
+1. Benign
+2. Malignant
+
+----------
+
+This data is available from the UCI Machine Learning Repository.
+
+http://mlearn.ics.uci.edu/MLRepository.html
+
+Murphy,P.M., Aha, D.W. (1994). UCI Repository of machine learning databases [http://www.ics.uci.edu/~mlearn/MLRepository.html]. Irvine, CA: University of California,  Department of Information and Computer Science.
+
+Donated by Olvi Mangasarian.

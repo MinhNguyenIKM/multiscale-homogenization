@@ -1,0 +1,37 @@
+Classify wines as coming from one of three vinyards, located in the same region  in Italy, based on 13 constituents found in the wines through chemical analysis.
+
+Samples may be classified using clustering (using only input data) or with Pattern Recognition or Fitting (with input and target data).
+
+The data set consists of 178 samples.
+
+"wineInputs" is an 13x178 matrix, whose rows are:
+
+1. Alcohol
+2. Malic acid
+3. Ash
+4. Alcalinity of ash  
+5. Magnesium
+6. Total phenols
+7. Flavanoids
+8. Nonflavanoid phenols
+9. Proanthocyanins
+10. Color intensity
+11. Hue
+12. OD280/OD315 of diluted wines
+13. Proline
+
+"wineTargets" is a 3x178 matrix, where each column indicates the correct vinyard with a 1 in one element (and zeros in the other two elements).
+
+1. Vinyard #1
+2. Vinyard #2
+3. Vinyard #3
+
+----------
+
+This data is available from the UCI Machine Learning Repository.
+
+http://mlearn.ics.uci.edu/MLRepository.html
+
+Murphy,P.M., Aha, D.W. (1994). UCI Repository of machine learning databases [http://www.ics.uci.edu/~mlearn/MLRepository.html]. Irvine, CA: University of California,  Department of Information and Computer Science.
+
+Donated to the repository by Stefan Aeberhard.

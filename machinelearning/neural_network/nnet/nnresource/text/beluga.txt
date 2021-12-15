@@ -1,0 +1,17 @@
+Estimate the nursing time of a beluga whale calf from the six-hour time period postpartem index.
+
+An estimator can be found by Fitting the inputs and targets
+
+The data set consists of 223 samples.
+
+"belugaInputs" is a 1x223 matrix of six-hour time period postpartem indices.
+
+"belugaTargets" is a 1x223 matrix of nursing times in seconds.
+
+----------
+
+This data is available from:
+
+http://pages.stern.nyu.edu/~jsimonof/Casebook/
+
+S. Chatterjee, M. S. Handcock & J. S. Simonoff (1995). A Casebook for a First Course in Statistics and Data Analysis. Wiley, New York.

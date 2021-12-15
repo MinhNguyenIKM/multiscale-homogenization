@@ -1,0 +1,135 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Pattern Association Showing Error Surface</title>
+      <meta name="generator" content="MATLAB 7.8">
+      <meta name="date" content="2009-01-19">
+      <meta name="m-file" content="demolin1">
+      <link rel="stylesheet" type="text/css" href="../../../matlab/demos/private/style.css">
+   </head>
+   <body>
+      <div class="header">
+         <div class="left"><a href="matlab:edit demolin1">Open demolin1.m in the Editor</a></div>
+         <div class="right"><a href="matlab:echodemo demolin1">Run in the Command Window</a></div>
+      </div>
+      <div class="content">
+         <h1>Pattern Association Showing Error Surface</h1>
+         <!--introduction-->
+         <p>A linear neuron is designed to respond to specific inputs with target outputs.</p>
+         <!--/introduction-->
+         <p>P defines two 1-element input patterns (column vectors).  T defines the associated 1-element targets (column vectors).</p><pre class="codeinput">P = [1.0 -1.2];
+T = [0.5 1.0];
+</pre><p>ERRSURF calculates errors for a neuron with a range of possible weight and bias values.  PLOTES plots this error surface with
+            a contour plot underneath. The best weight and bias values are those that result in the lowest point on the error surface.
+         </p><pre class="codeinput">w_range = -1:0.1:1;
+b_range = -1:0.1:1;
+ES = errsurf(P,T,w_range,b_range,<span class="string">'purelin'</span>);
+plotes(w_range,b_range,ES);
+</pre><img vspace="5" hspace="5" src="demolin1_01.png" alt=""> <p>The function NEWLIND will design a network that performs with the minimum error.</p><pre class="codeinput">net = newlind(P,T);
+</pre><p>SIM is used to simulate the network for inputs P.  We can then calculate the neurons errors.  SUMSQR adds up the squared errors.</p><pre class="codeinput">A = sim(net,P)
+E = T - A
+SSE = sumsqr(E)
+</pre><pre class="codeoutput">
+A =
+
+    0.5000    1.0000
+
+
+E =
+
+     0     0
+
+
+SSE =
+
+     0
+
+</pre><p>PLOTES replots the error surface.  PLOTEP plots the "position" of the network using the weight and bias values returned by
+            SOLVELIN.  As can be seen from the plot, SOLVELIN found the minimum error solution.
+         </p><pre class="codeinput">plotes(w_range,b_range,ES);
+plotep(net.IW{1,1},net.b{1},SSE);
+</pre><img vspace="5" hspace="5" src="demolin1_02.png" alt=""> <p>We can now test the associator with one of the original inputs, -1.2, and see if it returns the target, 1.0.</p><pre class="codeinput">p = -1.2;
+a = sim(net,p)
+</pre><pre class="codeoutput">
+a =
+
+     1
+
+</pre><p class="footer">Copyright 1992-2005 The MathWorks, Inc.<br>
+            Published with MATLAB&reg; 7.8
+         </p>
+         <p class="footer" id="trademarks">MATLAB and Simulink are registered trademarks of The MathWorks, Inc.  Please see <a href="http://www.mathworks.com/trademarks">www.mathworks.com/trademarks</a> for a list of other trademarks owned by The MathWorks, Inc.  Other product or brand names are trademarks or registered trademarks
+            of their respective owners.
+         </p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Pattern Association Showing Error Surface
+% A linear neuron is designed to respond to specific inputs with target outputs.
+% 
+% Copyright 1992-2005 The MathWorks, Inc.
+% $Revision: 1.14.2.1 $  $Date: 2005/11/15 01:15:07 $
+
+%%
+% P defines two 1-element input patterns (column vectors).  T defines the
+% associated 1-element targets (column vectors).
+
+P = [1.0 -1.2];
+T = [0.5 1.0];
+
+%%
+% ERRSURF calculates errors for a neuron with a range of possible weight and
+% bias values.  PLOTES plots this error surface with a contour plot underneath.
+% The best weight and bias values are those that result in the lowest point on
+% the error surface.
+
+w_range = -1:0.1:1;
+b_range = -1:0.1:1;
+ES = errsurf(P,T,w_range,b_range,'purelin');
+plotes(w_range,b_range,ES);
+
+%%
+% The function NEWLIND will design a network that performs with the minimum
+% error.
+
+net = newlind(P,T);
+
+%%
+% SIM is used to simulate the network for inputs P.  We can then calculate the
+% neurons errors.  SUMSQR adds up the squared errors.
+
+A = sim(net,P)
+E = T - A
+SSE = sumsqr(E)
+
+%%
+% PLOTES replots the error surface.  PLOTEP plots the "position" of the network
+% using the weight and bias values returned by SOLVELIN.  As can be seen from
+% the plot, SOLVELIN found the minimum error solution.
+
+plotes(w_range,b_range,ES);
+plotep(net.IW{1,1},net.b{1},SSE);
+
+
+
+%%
+% We can now test the associator with one of the original inputs, -1.2, and see
+% if it returns the target, 1.0.
+
+p = -1.2;
+a = sim(net,p)
+
+
+displayEndOfDemoMessage(mfilename)
+##### SOURCE END #####
+-->
+   </body>
+</html>

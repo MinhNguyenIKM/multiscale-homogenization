@@ -1,0 +1,447 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Gene Expression Analysis</title>
+      <meta name="generator" content="MATLAB 7.8">
+      <meta name="date" content="2009-01-19">
+      <meta name="m-file" content="yeastdemonnet">
+      <link rel="stylesheet" type="text/css" href="../../../matlab/demos/private/style.css">
+   </head>
+   <body>
+      <div class="header">
+         <div class="left"><a href="matlab:edit yeastdemonnet">Open yeastdemonnet.m in the Editor</a></div>
+         <div class="right"><a href="matlab:echodemo yeastdemonnet">Run in the Command Window</a></div>
+      </div>
+      <div class="content">
+         <h1>Gene Expression Analysis</h1>
+         <!--introduction-->
+         <p>This example demonstrates looking for patterns in gene expression profiles in baker's yeast using neural networks.</p>
+         <!--/introduction-->
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#1">The Problem: Analyzing Gene Expressions in Baker's Yeast (Saccharomyces Cerevisiae)</a></li>
+               <li><a href="#3">The Data</a></li>
+               <li><a href="#8">Filtering the Genes</a></li>
+               <li><a href="#14">Principal Component Analysis</a></li>
+               <li><a href="#17">Cluster Analysis: Self-Organizing Maps</a></li>
+               <li><a href="#21">Glossary</a></li>
+            </ul>
+         </div>
+         <h2>The Problem: Analyzing Gene Expressions in Baker's Yeast (Saccharomyces Cerevisiae)<a name="1"></a></h2>
+         <p>The goal is to gain some understanding of gene expressions in Saccharomyces cerevisiae, which is commonly known as baker's
+            yeast or brewer's yeast. It is the fungus that is used to bake bread and ferment wine from grapes.
+         </p>
+         <p>Saccharomyces cerevisiae, when introduced in a medium rich in glucose, can convert glucose to ethanol. Initially, yeast converts
+            glucose to ethanol by a metabolic process called "fermentation". However once supply of glucose is exhausted yeast shifts
+            from anerobic fermentation of glucose to aerobic respiraton of ethanol. This process is called diauxic shift. This process
+            is of considerable interest since it is accompanied by major changes in gene expression.
+         </p>
+         <p>The demo uses DNA microarray data to study temporal gene expression of almost all genes in Saccharomyces cerevisiae during
+            the diauxic shift.
+         </p>
+         <p>You need the Bioinformatics Toolbox&#8482; to run this demo.</p><pre class="codeinput"><span class="keyword">if</span> isempty(ver(<span class="string">'bioinfo'</span>))
+    errordlg(<span class="string">'This demo requires the Bioinformatics Toolbox.'</span>);
+    <span class="keyword">return</span>;
+<span class="keyword">end</span>
+</pre><h2>The Data<a name="3"></a></h2>
+         <p>This example uses data from DeRisi, JL, Iyer, VR, Brown, PO. "Exploring the metabolic and genetic control of gene expression
+            on a genomic scale." Science. 1997 Oct 24;278(5338):680-6. PMID: 9381177
+         </p>
+         <p>The full data set can be downloaded from the Gene Expression Omnibus website, <a href="http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE28">http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE28</a> .
+         </p>
+         <p>Start by loading the data into MATLAB&reg;.</p><pre class="codeinput">load <span class="string">yeastdata.mat</span>
+</pre><p>Gene expression levels were measured at seven time points during the diauxic shift. The variable <tt>times</tt> contains the times at which the expression levels were measured in the experiment. The variable <tt>genes</tt> contains the names of the genes whose expression levels were measured. The variable <tt>yeastvalues</tt> contains the "VALUE" data or LOG_RAT2N_MEAN, or log2 of ratio of  CH2DN_MEAN and CH1DN_MEAN from the seven time steps in
+            the experiment.
+         </p>
+         <p>To get an idea of the size of the data you can use <b>numel(genes)</b> to show how many genes there are in the data set.
+         </p><pre class="codeinput">numel(genes)
+</pre><pre class="codeoutput">
+ans =
+
+        6400
+
+</pre><p>genes is a cell array of the gene names. You can access the entries using MATLAB cell array indexing:</p><pre class="codeinput">genes{15}
+</pre><pre class="codeoutput">
+ans =
+
+YAL054C
+
+</pre><p>This indicates that the 15th row of the variable <b>yeastvalues</b> contains expression levels for the ORF <tt>YAL054C</tt>. You can use the web command to access information about this ORF in the Saccharomyces Genome Database (SGD).
+         </p><pre class="codeinput">url = sprintf(<span class="keyword">...</span>
+        <span class="string">'http://genome-www4.stanford.edu/cgi-bin/SGD/locus.pl?locus=%s'</span>,<span class="keyword">...</span>
+        genes{15});
+web(url);
+</pre><h2>Filtering the Genes<a name="8"></a></h2>
+         <p>The data set is quite large and a lot of the information corresponds to genes that do not show any interesting changes during
+            the experiment. To make it easier to find the interesting genes, the first thing to do is to reduce the size of the data set
+            by removing genes with expression profiles that do not show anything of interest. There are 6400 expression profiles. You
+            can use a number of techniques to reduce this to some subset that contains the most significant genes.
+         </p>
+         <p>If you look through the gene list you will see several spots marked as 'EMPTY'. These are empty spots on the array, and while
+            they might have data associated with them, for the purposes of this example, you can consider these points to be noise. These
+            points can be found using the <b>strcmp</b> function and removed from the data set with indexing commands.
+         </p><pre class="codeinput">emptySpots = strcmp(<span class="string">'EMPTY'</span>,genes);
+yeastvalues(emptySpots,:) = [];
+genes(emptySpots) = [];
+numel(genes)
+</pre><pre class="codeoutput">
+ans =
+
+        6314
+
+</pre><p>In the yeastvalues data you will also see several places where the expression level is marked as NaN. This indicates that
+            no data was collected for this spot at the particular time step. One approach to dealing with these missing values would be
+            to impute them using the mean or median of data for the particular gene over time. This example uses a less rigorous approach
+            of simply throwing away the data for any genes where one or more expression level was not measured.
+         </p>
+         <p>The function <b>isnan</b> is used to identify the genes with missing data and indexing commands are used to remove the genes with missing data.
+         </p><pre class="codeinput">nanIndices = any(isnan(yeastvalues),2);
+yeastvalues(nanIndices,:) = [];
+genes(nanIndices) = [];
+numel(genes)
+</pre><pre class="codeoutput">
+ans =
+
+        6276
+
+</pre><p>If you were to plot the expression profiles of all the remaining profiles, you would see that most profiles are flat and not
+            significantly different from the others. This flat data is obviously of use as it indicates that the genes associated with
+            these profiles are not significantly affected by the diauxic shift; however, in this example, you are interested in the genes
+            with large changes in expression accompanying the diauxic shift. You can use filtering functions in the Bioinformatics Toolbox&#8482;
+            to remove genes with various types of profiles that do not provide useful information about genes affected by the metabolic
+            change.
+         </p>
+         <p>You can use the <b>genevarfilter</b> function to filter out genes with small variance over time. The function returns a logical array of the same size as the
+            variable genes with ones corresponding to rows of yeastvalues with variance greater than the 10th percentile and zeros corresponding
+            to those below the threshold.
+         </p><pre class="codeinput">mask = genevarfilter(yeastvalues);
+<span class="comment">% Use the mask as an index into the values to remove the filtered genes.</span>
+yeastvalues = yeastvalues(mask,:);
+genes = genes(mask);
+numel(genes)
+</pre><pre class="codeoutput">
+ans =
+
+        5648
+
+</pre><p>The function <b>genelowvalfilter</b> removes genes that have very low absolute expression values. Note that the gene filter functions can also automatically calculate
+            the filtered data and names.
+         </p><pre class="codeinput">[mask, yeastvalues, genes] = genelowvalfilter(yeastvalues,genes,<span class="keyword">...</span>
+                                                        <span class="string">'absval'</span>,log2(3));
+numel(genes)
+</pre><pre class="codeoutput">
+ans =
+
+   822
+
+</pre><p>Use <b>geneentropyfilter</b> to remove genes whose profiles have low entropy:
+         </p><pre class="codeinput">[mask, yeastvalues, genes] = geneentropyfilter(yeastvalues,genes,<span class="keyword">...</span>
+                                                           <span class="string">'prctile'</span>,15);
+numel(genes)
+</pre><pre class="codeoutput">
+ans =
+
+   614
+
+</pre><h2>Principal Component Analysis<a name="14"></a></h2>
+         <p>Now that you have a manageable list of genes, you can look for relationships between the profiles.</p>
+         <p>Principal-component analysis(PCA) is a useful technique that can be used to reduce the dimensionality of large data sets,
+            such as those from microarray analysis. This technique isolates the principal components of the dataset eliminating those
+            components that contribute the least to the variation in the data set.
+         </p><pre class="codeinput">yeastvalues = mapstd(yeastvalues');   <span class="comment">% Normalize data</span>
+pc = processpca(yeastvalues,0.15);    <span class="comment">% PCA</span>
+</pre><p>The input vectors are first normalized, using <tt>mapstd</tt>, so that they have zero mean and unity variance. <tt>processpca</tt> is the function that implements the PCA algorithm. The second argument passed to <tt>processpca</tt> is 0.15. This means that <tt>processpca</tt> eliminates those principal components that contribute less than 15% to the total variation in the data set. The variable
+            <tt>pc</tt> now contains the principal components of the yeastvalues data.
+         </p>
+         <p>The principal components can be visiualized using the <b>scatter</b> function.
+         </p><pre class="codeinput">figure
+scatter(pc(1,:),pc(2,:));
+xlabel(<span class="string">'First Principal Component'</span>);
+ylabel(<span class="string">'Second Principal Component'</span>);
+title(<span class="string">'Principal Component Scatter Plot'</span>);
+</pre><img vspace="5" hspace="5" src="yeastdemonnet_01.png" alt=""> <h2>Cluster Analysis: Self-Organizing Maps<a name="17"></a></h2>
+         <p>The principal components can be now be clustered using the Self-Organizing map (SOM) clustering algorithm available in the
+            neural network toolbox.
+         </p>
+         <p>The <tt>newsom</tt> function creates a Self-Organizing map network which can then be trained with the <tt>train</tt> function.
+         </p><pre class="codeinput">net = newsom(pc,[5 3]);
+net = train(net, pc);
+</pre><p>Use <b>plotsom</b> to display the network over a scatter plot of the data. Note that the SOM algorithm uses random starting points so the results
+            will vary from run to run.
+         </p><pre class="codeinput">figure
+plot(pc(1,:),pc(2,:),<span class="string">'.g'</span>,<span class="string">'markersize'</span>,20)
+hold <span class="string">on</span>
+plotsom(net.iw{1,1},net.layers{1}.distances)
+hold <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="yeastdemonnet_02.png" alt=""> <p>You can assign clusters using the SOM by finding the nearest node to each point in the data set.</p><pre class="codeinput">distances = dist(pc',net.IW{1}');
+[d,cndx] = min(distances,[],2);
+<span class="comment">% cndx gives the cluster index</span>
+
+figure
+gscatter(pc(1,:),pc(2,:),cndx); legend <span class="string">off</span>;
+hold <span class="string">on</span>
+plotsom(net.iw{1,1},net.layers{1}.distances);
+hold <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="yeastdemonnet_03.png" alt=""> <p>You can also use other clustering algorithms like Hierarchial clustering and K-means, available in the Statistics toolbox
+            for cluster analysis.
+         </p>
+         <h2>Glossary<a name="21"></a></h2>
+         <p><b>ORF</b> - An open reading frame (ORF) is a portion of a gene&#8217;s sequence that contains a sequence of bases, uninterrupted by stop
+            sequences, that could potentially encode a protein.
+         </p>
+         <p><b><a href="mailto:bioinfo-feedback@mathworks.com?subject=Feedback%20for%20YEASTDEMO%20in%20Bioinformatics%20Toolbox%202.1.1">Provide feedback for this demo.</a></b></p>
+         <p class="footer">Copyright 2003-2008 The MathWorks, Inc.<br>
+            Published with MATLAB&reg; 7.8
+         </p>
+         <p class="footer" id="trademarks">MATLAB and Simulink are registered trademarks of The MathWorks, Inc.  Please see <a href="http://www.mathworks.com/trademarks">www.mathworks.com/trademarks</a> for a list of other trademarks owned by The MathWorks, Inc.  Other product or brand names are trademarks or registered trademarks
+            of their respective owners.
+         </p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Gene Expression Analysis
+% This example demonstrates looking for patterns in gene expression
+% profiles in baker's yeast using neural networks.
+
+%   Copyright 2003-2008 The MathWorks, Inc.
+%   $Revision: 1.1.8.5 $  $Date: 2008/04/06 19:16:44 $
+
+%% The Problem: Analyzing Gene Expressions in Baker's Yeast (Saccharomyces Cerevisiae)
+% The goal is to gain some understanding of gene expressions in
+% Saccharomyces cerevisiae, which is commonly known as baker's yeast or
+% brewer's yeast. It is the fungus that is used to bake bread and ferment
+% wine from grapes.
+%
+% Saccharomyces cerevisiae, when introduced in a medium rich in glucose,
+% can convert glucose to ethanol. Initially, yeast converts glucose to
+% ethanol by a metabolic process called "fermentation". However once supply
+% of glucose is exhausted yeast shifts from anerobic fermentation of
+% glucose to aerobic respiraton of ethanol. This process is called diauxic
+% shift. This process is of considerable interest since it is accompanied
+% by major changes in gene expression.
+% 
+% The demo uses DNA microarray data to study temporal gene expression of
+% almost all genes in Saccharomyces cerevisiae during the diauxic shift.
+%
+%%
+% You need the Bioinformatics Toolbox(TM) to run this demo. 
+
+if isempty(ver('bioinfo'))
+    errordlg('This demo requires the Bioinformatics Toolbox.');
+    return;
+end
+
+%% The Data
+% This example uses data from DeRisi, JL, Iyer, VR, Brown, PO. "Exploring
+% the metabolic and genetic control of gene expression on a genomic scale."
+% Science. 1997 Oct 24;278(5338):680-6. PMID: 9381177 
+%
+% The full data set can be downloaded from the Gene Expression Omnibus
+% website, http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE28 .
+%
+% Start by loading the data into MATLAB(R). 
+
+load yeastdata.mat
+
+%%
+% Gene expression levels were measured at seven time points during the
+% diauxic shift. The variable |times| contains the times at which the
+% expression levels were measured in the experiment. The variable |genes|
+% contains the names of the genes whose expression levels were measured.
+% The variable |yeastvalues| contains the "VALUE" data or LOG_RAT2N_MEAN,
+% or log2 of ratio of  CH2DN_MEAN and CH1DN_MEAN from the seven time steps
+% in the experiment.
+
+%%
+% To get an idea of the size of the data you can use *numel(genes)* to show
+% how many genes there are in the data set. 
+
+numel(genes)
+
+%%
+% genes is a cell array of the gene names. You can access the entries using
+% MATLAB cell array indexing:
+
+genes{15}
+
+%%
+% This indicates that the 15th row of the variable *yeastvalues* contains
+% expression levels for the ORF |YAL054C|. You can use the web command to
+% access information about this ORF in the Saccharomyces Genome Database
+% (SGD).
+
+url = sprintf(...
+        'http://genome-www4.stanford.edu/cgi-bin/SGD/locus.pl?locus=%s',...
+        genes{15});
+web(url);
+
+%% Filtering the Genes
+% The data set is quite large and a lot of the information corresponds to
+% genes that do not show any interesting changes during the experiment. To
+% make it easier to find the interesting genes, the first thing to do is to
+% reduce the size of the data set by removing genes with expression
+% profiles that do not show anything of interest. There are 6400 expression
+% profiles. You can use a number of techniques to reduce this to some
+% subset that contains the most significant genes. 
+
+%%
+% If you look through the gene list you will see several spots marked as
+% 'EMPTY'. These are empty spots on the array, and while they might have
+% data associated with them, for the purposes of this example, you can
+% consider these points to be noise. These points can be found using the
+% *strcmp* function and removed from the data set with indexing commands.
+% 
+
+emptySpots = strcmp('EMPTY',genes);
+yeastvalues(emptySpots,:) = [];
+genes(emptySpots) = [];
+numel(genes)
+
+%%
+% In the yeastvalues data you will also see several places where the
+% expression level is marked as NaN. This indicates that no data was 
+% collected for this spot at the particular time step. One approach to
+% dealing with these missing values would be to impute them using the 
+% mean or median of data for the particular gene over time. This example
+% uses a less rigorous approach of simply throwing away the data for any
+% genes where one or more expression level was not measured.
+%
+% The function *isnan* is used to identify the genes with missing data and
+% indexing commands are used to remove the genes with missing data.  
+
+nanIndices = any(isnan(yeastvalues),2);
+yeastvalues(nanIndices,:) = [];
+genes(nanIndices) = [];
+numel(genes)
+
+%%
+% If you were to plot the expression profiles of all the remaining
+% profiles, you would see that most profiles are flat and not significantly
+% different from the others. This flat data is obviously of use as it
+% indicates that the genes associated with these profiles are not
+% significantly affected by the diauxic shift; however, in this example,
+% you are interested in the genes with large changes in expression
+% accompanying the diauxic shift. You can use filtering functions in the
+% Bioinformatics Toolbox(TM) to remove genes with various types of profiles
+% that do not provide useful information about genes affected by the
+% metabolic change.
+%
+% You can use the *genevarfilter* function to filter out genes with small
+% variance over time. The function returns a logical array of the same size
+% as the variable genes with ones corresponding to rows of yeastvalues with
+% variance greater than the 10th percentile and zeros corresponding to
+% those below the threshold. 
+
+mask = genevarfilter(yeastvalues);
+% Use the mask as an index into the values to remove the filtered genes. 
+yeastvalues = yeastvalues(mask,:);
+genes = genes(mask);
+numel(genes)
+
+%%
+% The function *genelowvalfilter* removes genes that have very low absolute
+% expression values. Note that the gene filter functions can also
+% automatically calculate the filtered data and names. 
+
+[mask, yeastvalues, genes] = genelowvalfilter(yeastvalues,genes,...
+                                                        'absval',log2(3));
+numel(genes)
+
+%%
+% Use *geneentropyfilter* to remove genes whose profiles have low entropy: 
+[mask, yeastvalues, genes] = geneentropyfilter(yeastvalues,genes,...
+                                                           'prctile',15);
+numel(genes)
+
+%% Principal Component Analysis
+% Now that you have a manageable list of genes, you can look for
+% relationships between the profiles.
+%
+% Principal-component analysis(PCA) is a useful technique that can be used
+% to reduce the dimensionality of large data sets, such as those from
+% microarray analysis. This technique isolates the principal components of
+% the dataset eliminating those components that contribute the least to the
+% variation in the data set. 
+
+yeastvalues = mapstd(yeastvalues');   % Normalize data
+pc = processpca(yeastvalues,0.15);    % PCA
+
+%%
+% The input vectors are first normalized, using |mapstd|, so that they have
+% zero mean and unity variance. |processpca| is the function that
+% implements the PCA algorithm. The second argument passed to |processpca|
+% is 0.15. This means that |processpca| eliminates those principal
+% components that contribute less than 15% to the total variation in the
+% data set. The variable |pc| now contains the principal components of the
+% yeastvalues data.
+%% 
+% The principal components can be visiualized using the *scatter* function.
+
+figure
+scatter(pc(1,:),pc(2,:));
+xlabel('First Principal Component');
+ylabel('Second Principal Component');
+title('Principal Component Scatter Plot');
+
+%% Cluster Analysis: Self-Organizing Maps
+% The principal components can be now be clustered using the
+% Self-Organizing map (SOM) clustering algorithm available in the neural
+% network toolbox.
+% 
+% The |newsom| function creates a Self-Organizing map network which can
+% then be trained with the |train| function.  
+
+net = newsom(pc,[5 3]);
+net = train(net, pc);
+
+%%
+% Use *plotsom* to display the network over a scatter plot of the data.
+% Note that the SOM algorithm uses random starting points so the results
+% will vary from run to run.
+
+figure
+plot(pc(1,:),pc(2,:),'.g','markersize',20)
+hold on
+plotsom(net.iw{1,1},net.layers{1}.distances)
+hold off
+
+%%
+% You can assign clusters using the SOM by finding the nearest node to each
+% point in the data set.
+
+distances = dist(pc',net.IW{1}');
+[d,cndx] = min(distances,[],2);
+% cndx gives the cluster index
+
+figure
+gscatter(pc(1,:),pc(2,:),cndx); legend off;
+hold on
+plotsom(net.iw{1,1},net.layers{1}.distances);
+hold off
+%%
+% You can also use other clustering algorithms like Hierarchial clustering
+% and K-means, available in the Statistics toolbox for cluster analysis.
+
+
+%% Glossary
+% *ORF* - An open reading frame (ORF) is a portion of a gene’s sequence
+% that contains a sequence of bases, uninterrupted by stop sequences, that
+% could potentially encode a protein.
+
+%%
+% *<mailto:bioinfo-feedback@mathworks.com?subject=Feedback%20for%20YEASTDEMO%20in%20Bioinformatics%20Toolbox%202.1.1 Provide feedback for this demo.>*
+
+displayEndOfDemoMessage(mfilename)
+##### SOURCE END #####
+-->
+   </body>
+</html>

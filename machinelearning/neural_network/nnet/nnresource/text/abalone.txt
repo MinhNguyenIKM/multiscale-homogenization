@@ -1,0 +1,28 @@
+Estimate the number of rings of an abalone shell given eight measurements. The number of rings is useful as it can be used to compute the age, by adding 1.5.
+
+An estimator can be found by Fitting the inputs and targets
+
+The data set consists of 4177 samples.
+
+"abaloneInputs" is an 8x4177 matrix, whose rows are:
+
+1. Sex, M, F, and I (infant)
+2. Length
+3. Diameter
+4. Height
+5. Whole weight
+6. Shucked weight
+7. Viscera weight
+8. Shell weight
+
+"abaloneTargets" is a 1x4177 matrix of ring counts.
+
+----------
+
+This data is available from the UCI Machine Learning Repository.
+
+http://mlearn.ics.uci.edu/MLRepository.html
+
+Murphy,P.M., Aha, D.W. (1994). UCI Repository of machine learning databases [http://www.ics.uci.edu/~mlearn/MLRepository.html]. Irvine, CA: University of California,  Department of Information and Computer Science.
+
+Donated to the repository by Sam Waugh.

@@ -1,0 +1,150 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Learning Vector Quantization</title>
+      <meta name="generator" content="MATLAB 7.8">
+      <meta name="date" content="2009-01-19">
+      <meta name="m-file" content="demolvq1">
+      <link rel="stylesheet" type="text/css" href="../../../matlab/demos/private/style.css">
+   </head>
+   <body>
+      <div class="header">
+         <div class="left"><a href="matlab:edit demolvq1">Open demolvq1.m in the Editor</a></div>
+         <div class="right"><a href="matlab:echodemo demolvq1">Run in the Command Window</a></div>
+      </div>
+      <div class="content">
+         <h1>Learning Vector Quantization</h1>
+         <!--introduction-->
+         <p>An LVQ network is trained to classify input vectors according to given targets.</p>
+         <!--/introduction-->
+         <p>Let P be 10 2-element example input vectors and C be the classes these vectors fall into.  These classes can be transformed
+            into vectors to be used as targets, T, with IND2VEC.
+         </p><pre class="codeinput">P = [-3 -2 -2  0  0  0  0 +2 +2 +3;
+      0 +1 -1 +2 +1 -1 -2 +1 -1  0];
+C = [1 1 1 2 2 2 2 1 1 1];
+T = ind2vec(C);
+</pre><p>Here the data points are plotted.  Red = class 1, Cyan = class 2.  The LVQ network represents clusters of vectors with hidden
+            neurons, and groups the clusters with output neurons to form the desired classes.
+         </p><pre class="codeinput">colormap(hsv);
+plotvec(P,C)
+title(<span class="string">'Input Vectors'</span>);
+xlabel(<span class="string">'P(1)'</span>);
+ylabel(<span class="string">'P(2)'</span>);
+</pre><img vspace="5" hspace="5" src="demolvq1_01.png" alt=""> <p>NEWLVQ creates an LVQ layer and here takes four arguments: Rx2 matrix of min and max values for R input elements, number of
+            hidden neurons, element vector of typical class percentages, and learning rate,
+         </p><pre class="codeinput">net = newlvq(minmax(P),4,[.6 .4],0.1);
+</pre><p>The competitive neuron weight vectors are plotted as follows.</p><pre class="codeinput">hold <span class="string">on</span>
+W1 = net.IW{1};
+plot(W1(1,1),W1(1,2),<span class="string">'ow'</span>)
+title(<span class="string">'Input/Weight Vectors'</span>);
+xlabel(<span class="string">'P(1), W(1)'</span>);
+ylabel(<span class="string">'P(2), W(3)'</span>);
+</pre><img vspace="5" hspace="5" src="demolvq1_02.png" alt=""> <p>To train the network, first override the default number of epochs, and then train the network.  When it is finished, replot
+            the input vectors '+' and the competitive neurons' weight vectors 'o'. Red = class 1, Cyan = class 2.
+         </p><pre class="codeinput">net.trainParam.epochs=150;
+net.trainParam.show=Inf;
+net=train(net,P,T);
+
+cla;
+plotvec(P,C);
+hold <span class="string">on</span>;
+plotvec(net.IW{1}',vec2ind(net.LW{2}),<span class="string">'o'</span>);
+</pre><img vspace="5" hspace="5" src="demolvq1_03.png" alt=""> <p>Now use the LVQ network as a classifier, where each neuron corresponds to a different category.  Present the input vector
+            [0.2; 1].  Red = class 1, Cyan = class 2.
+         </p><pre class="codeinput">p = [0.2; 1];
+a = vec2ind(sim(net,p))
+</pre><pre class="codeoutput">
+a =
+
+     2
+
+</pre><p class="footer">Copyright 1992-2005 The MathWorks, Inc.<br>
+            Published with MATLAB&reg; 7.8
+         </p>
+         <p class="footer" id="trademarks">MATLAB and Simulink are registered trademarks of The MathWorks, Inc.  Please see <a href="http://www.mathworks.com/trademarks">www.mathworks.com/trademarks</a> for a list of other trademarks owned by The MathWorks, Inc.  Other product or brand names are trademarks or registered trademarks
+            of their respective owners.
+         </p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Learning Vector Quantization
+% An LVQ network is trained to classify input vectors according to given
+% targets.
+%
+% Copyright 1992-2005 The MathWorks, Inc.
+% $Revision: 1.14.2.1 $  $Date: 2005/11/15 01:15:14 $
+
+%%
+% Let P be 10 2-element example input vectors and C be the classes these vectors
+% fall into.  These classes can be transformed into vectors to be used as
+% targets, T, with IND2VEC.
+
+P = [-3 -2 -2  0  0  0  0 +2 +2 +3;
+      0 +1 -1 +2 +1 -1 -2 +1 -1  0];
+C = [1 1 1 2 2 2 2 1 1 1];
+T = ind2vec(C);
+
+%%
+% Here the data points are plotted.  Red = class 1, Cyan = class 2.  The LVQ
+% network represents clusters of vectors with hidden neurons, and groups the
+% clusters with output neurons to form the desired classes.
+
+colormap(hsv);
+plotvec(P,C)
+title('Input Vectors');
+xlabel('P(1)');
+ylabel('P(2)');
+
+%%
+% NEWLVQ creates an LVQ layer and here takes four arguments: Rx2 matrix of min
+% and max values for R input elements, number of hidden neurons, element vector
+% of typical class percentages, and learning rate,
+
+net = newlvq(minmax(P),4,[.6 .4],0.1);
+
+%%
+% The competitive neuron weight vectors are plotted as follows.
+
+hold on
+W1 = net.IW{1};
+plot(W1(1,1),W1(1,2),'ow')
+title('Input/Weight Vectors');
+xlabel('P(1), W(1)');
+ylabel('P(2), W(3)');
+
+%%
+% To train the network, first override the default number of epochs, and then
+% train the network.  When it is finished, replot the input vectors '+' and the
+% competitive neurons' weight vectors 'o'. Red = class 1, Cyan = class 2.
+
+net.trainParam.epochs=150;
+net.trainParam.show=Inf;
+net=train(net,P,T);
+
+cla;
+plotvec(P,C);
+hold on;
+plotvec(net.IW{1}',vec2ind(net.LW{2}),'o');
+
+%%
+% Now use the LVQ network as a classifier, where each neuron corresponds to a
+% different category.  Present the input vector [0.2; 1].  Red = class 1, Cyan =
+% class 2.
+
+p = [0.2; 1];
+a = vec2ind(sim(net,p))
+
+
+displayEndOfDemoMessage(mfilename)
+##### SOURCE END #####
+-->
+   </body>
+</html>

@@ -1,0 +1,111 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Adaptive Noise Cancellation</title>
+      <meta name="generator" content="MATLAB 7.8">
+      <meta name="date" content="2009-01-19">
+      <meta name="m-file" content="demolin8">
+      <link rel="stylesheet" type="text/css" href="../../../matlab/demos/private/style.css">
+   </head>
+   <body>
+      <div class="header">
+         <div class="left"><a href="matlab:edit demolin8">Open demolin8.m in the Editor</a></div>
+         <div class="right"><a href="matlab:echodemo demolin8">Run in the Command Window</a></div>
+      </div>
+      <div class="content">
+         <h1>Adaptive Noise Cancellation</h1>
+         <!--introduction-->
+         <p>A linear neuron is allowed to adapt so that given one signal, it can predict a second signal.</p>
+         <!--/introduction-->
+         <p>TIME defines the time steps of this simulation.  P defines a signal over these time steps.  T is a signal derived from P by
+            shifting it to the left, multiplying it by 2 and adding it to itself.
+         </p><pre class="codeinput">time = 1:0.01:2.5;
+X = sin(sin(time).*time*10);
+P = con2seq(X);
+T = con2seq(2*[0 X(1:(end-1))] + X);
+</pre><p>Here is how the two signals are plotted:</p><pre class="codeinput">plot(time,cat(2,P{:}),time,cat(2,T{:}),<span class="string">'--'</span>)
+title(<span class="string">'Input and Target Signals'</span>)
+xlabel(<span class="string">'Time'</span>)
+legend({<span class="string">'Input'</span>,<span class="string">'Target'</span>})
+</pre><img vspace="5" hspace="5" src="demolin8_01.png" alt=""> <p>The linear network must have tapped delay in order to learn the time-shifted correlation between P and T.  NEWLIN creates
+            a linear layer.  [-3 3] is the expected input range.  The second argument is the number of neurons in the layer.  [0 1] specifies
+            one input with no delay and one input with a delay of one.  The last argument is the learning rate.
+         </p><pre class="codeinput">net = newlin([-3 3],1,[0 1],0.1);
+</pre><p>ADAPT simulates adaptive networks.  It takes a network, a signal, and a target signal, and filters the signal adaptively.
+             Plot the output Y in blue, the target T in red and the error E in green.  By t=2 the network has learned the relationship
+            between the input and the target  and the error drops to near zero.
+         </p><pre class="codeinput">[net,Y,E,Pf]=adapt(net,P,T);
+plot(time,cat(2,Y{:}),<span class="string">'b'</span>, <span class="keyword">...</span>
+   time,cat(2,T{:}),<span class="string">'r'</span>, <span class="keyword">...</span>
+   time,cat(2,E{:}),<span class="string">'g'</span>,[1 2.5],[0 0],<span class="string">'k'</span>)
+legend({<span class="string">'Output'</span>,<span class="string">'Target'</span>,<span class="string">'Error'</span>})
+</pre><img vspace="5" hspace="5" src="demolin8_02.png" alt=""> <p class="footer">Copyright 1992-2008 The MathWorks, Inc.<br>
+            Published with MATLAB&reg; 7.8
+         </p>
+         <p class="footer" id="trademarks">MATLAB and Simulink are registered trademarks of The MathWorks, Inc.  Please see <a href="http://www.mathworks.com/trademarks">www.mathworks.com/trademarks</a> for a list of other trademarks owned by The MathWorks, Inc.  Other product or brand names are trademarks or registered trademarks
+            of their respective owners.
+         </p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Adaptive Noise Cancellation
+% A linear neuron is allowed to adapt so that given one signal, it can predict a
+% second signal.
+% 
+% Copyright 1992-2008 The MathWorks, Inc.
+% $Revision: 1.13.2.4 $  $Date: 2008/06/20 08:04:10 $
+
+%%
+% TIME defines the time steps of this simulation.  P defines a signal over these
+% time steps.  T is a signal derived from P by shifting it to the left,
+% multiplying it by 2 and adding it to itself.
+
+time = 1:0.01:2.5;
+X = sin(sin(time).*time*10);
+P = con2seq(X);
+T = con2seq(2*[0 X(1:(end-1))] + X);
+
+%%
+% Here is how the two signals are plotted:
+
+plot(time,cat(2,P{:}),time,cat(2,T{:}),'REPLACE_WITH_DASH_DASH')
+title('Input and Target Signals')
+xlabel('Time')
+legend({'Input','Target'})
+
+%%
+% The linear network must have tapped delay in order to learn the time-shifted
+% correlation between P and T.  NEWLIN creates a linear layer.  [-3 3] is the
+% expected input range.  The second argument is the number of neurons in the
+% layer.  [0 1] specifies one input with no delay and one input with a delay of
+% one.  The last argument is the learning rate.
+
+net = newlin([-3 3],1,[0 1],0.1);
+
+%%
+% ADAPT simulates adaptive networks.  It takes a network, a signal, and a target
+% signal, and filters the signal adaptively.  Plot the output Y in blue, the
+% target T in red and the error E in green.  By t=2 the network has learned the
+% relationship between the input and the target  and the error drops to near
+% zero.
+
+[net,Y,E,Pf]=adapt(net,P,T);
+plot(time,cat(2,Y{:}),'b', ...
+   time,cat(2,T{:}),'r', ...
+   time,cat(2,E{:}),'g',[1 2.5],[0 0],'k')
+legend({'Output','Target','Error'})
+
+
+displayEndOfDemoMessage(mfilename)
+##### SOURCE END #####
+-->
+   </body>
+</html>

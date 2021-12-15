@@ -1,0 +1,22 @@
+Predict the average price of a home (in $1000's) based on 8 neighborhood characteristics.
+
+An estimator can be found by Fitting the inputs and targets
+
+"housedelveInputs" is a 8x19574 matrix with these rows:
+
+1. total households
+2. % Asian or Pacific Inslander (asian)
+3. % [25:64] years old     
+4. % of households with 2 or more persons which are family households
+5. % of households with black householder
+6. % of vacant household for sale only
+7. Average number of rooms in an owner-occupied household
+8. % of vacant-for-sale houses vacant more then 6 months
+
+"housedelveTargets" is a 1x19574 matrix of average neighborhood house prices.
+
+----------
+
+This data is available from:
+
+http://www.cs.utoronto.ca/~delve/data/datasets.html

@@ -1,0 +1,118 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>One-Dimensional Self-organizing Map</title>
+      <meta name="generator" content="MATLAB 7.8">
+      <meta name="date" content="2009-01-19">
+      <meta name="m-file" content="demosm1">
+      <link rel="stylesheet" type="text/css" href="../../../matlab/demos/private/style.css">
+   </head>
+   <body>
+      <div class="header">
+         <div class="left"><a href="matlab:edit demosm1">Open demosm1.m in the Editor</a></div>
+         <div class="right"><a href="matlab:echodemo demosm1">Run in the Command Window</a></div>
+      </div>
+      <div class="content">
+         <h1>One-Dimensional Self-organizing Map</h1>
+         <!--introduction-->
+         <p>Neurons in a 2-D layer learn to represent different regions of the input space where input vectors occur.  In addition, neighboring
+            neurons learn to respond to similar inputs, thus the layer learns the topology of the presented input space.
+         </p>
+         <!--/introduction-->
+         <p>Here 100 data points are created on the unit circle.</p>
+         <p>A competitive network will be used to classify these points into natural classes.</p><pre class="codeinput">angles = 0:0.5*pi/99:0.5*pi;
+P = [sin(angles); cos(angles)];
+plot(P(1,:),P(2,:),<span class="string">'+r'</span>)
+</pre><img vspace="5" hspace="5" src="demosm1_01.png" alt=""> <p>The map will be a 1-dimensional layer of 10 neurons.</p>
+         <p>The first argument specifies two inputs, each with a range of 0 to 1.  The second determines the network is one dimensional
+            with 10 neurons.
+         </p><pre class="codeinput">net = newsom([0 1;0 1],[10]);
+</pre><p>Specify the network is to be trained for 10 epochs and use TRAIN to train the network on the input data P:</p><pre class="codeinput">net.trainParam.epochs = 10;
+net = train(net,P);
+</pre><p>Now plot the trained network with PLOTSOM.</p>
+         <p>The red dots are the neuron's weight vectors, and the blue lines connect each pair within a distance of 1.</p><pre class="codeinput">plotsom(net.iw{1,1},net.layers{1}.distances)
+</pre><img vspace="5" hspace="5" src="demosm1_02.png" alt=""> <p>The map can now be used to classify inputs, like [1; 0]:</p>
+         <p>Either neuron 1 or 10 should have an output of 1, as the above input vector was at one end of the presented input space. 
+            The first pair of numbers indicate the neuron, and the single number indicates its output.
+         </p><pre class="codeinput">p = [1;0];
+a = sim(net,p)
+</pre><pre class="codeoutput">
+a =
+
+  (10,1)        1
+
+</pre><p class="footer">Copyright 1992-2007 The MathWorks, Inc.<br>
+            Published with MATLAB&reg; 7.8
+         </p>
+         <p class="footer" id="trademarks">MATLAB and Simulink are registered trademarks of The MathWorks, Inc.  Please see <a href="http://www.mathworks.com/trademarks">www.mathworks.com/trademarks</a> for a list of other trademarks owned by The MathWorks, Inc.  Other product or brand names are trademarks or registered trademarks
+            of their respective owners.
+         </p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% One-Dimensional Self-organizing Map
+% Neurons in a 2-D layer learn to represent different regions of the input space
+% where input vectors occur.  In addition, neighboring neurons learn to respond
+% to similar inputs, thus the layer learns the topology of the presented input
+% space.
+%
+% Copyright 1992-2007 The MathWorks, Inc.
+% $Revision: 1.20.2.2 $  $Date: 2008/01/10 21:11:05 $
+
+%%
+% Here 100 data points are created on the unit circle.
+%
+% A competitive network will be used to classify these points into natural
+% classes.
+
+angles = 0:0.5*pi/99:0.5*pi;
+P = [sin(angles); cos(angles)];
+plot(P(1,:),P(2,:),'+r')
+
+%%
+% The map will be a 1-dimensional layer of 10 neurons.
+%
+% The first argument specifies two inputs, each with a range of 0 to 1.  The
+% second determines the network is one dimensional with 10 neurons.
+
+net = newsom([0 1;0 1],[10]);
+
+%%
+% Specify the network is to be trained for 10 epochs and use TRAIN to train the
+% network on the input data P:
+
+net.trainParam.epochs = 10;
+net = train(net,P);
+
+%%
+% Now plot the trained network with PLOTSOM.
+% 
+% The red dots are the neuron's weight vectors, and the blue lines connect each
+% pair within a distance of 1.
+
+plotsom(net.iw{1,1},net.layers{1}.distances)
+
+%%
+% The map can now be used to classify inputs, like [1; 0]:
+%
+% Either neuron 1 or 10 should have an output of 1, as the above input vector
+% was at one end of the presented input space.  The first pair of numbers
+% indicate the neuron, and the single number indicates its output.
+
+p = [1;0];
+a = sim(net,p)
+
+
+displayEndOfDemoMessage(mfilename)
+##### SOURCE END #####
+-->
+   </body>
+</html>

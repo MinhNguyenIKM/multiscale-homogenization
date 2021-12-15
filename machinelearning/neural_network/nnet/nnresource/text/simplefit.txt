@@ -1,0 +1,13 @@
+Estimate the outputs of an arbitrary one-input/one-output function.
+
+An estimator can be found by Fitting the inputs and targets
+
+The data set consists of 67 samples.
+
+"simplefitInputs" is an 1x67 matrix.
+
+"simplefitTargets" is a 1x67 matrix.
+
+----------
+
+This simple example can be solved with the Neural Network Fitting Tool (nftool).

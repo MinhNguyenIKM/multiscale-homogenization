@@ -1,0 +1,32 @@
+Predict the type of glass, either window glass or non-window glass, based on measurements of the chemical content.
+
+Samples may be classified using clustering (using only input data) or with Pattern Recognition or Fitting (with input and target data).
+
+The data set consists of 214 samples.
+
+"glassInputs" is a 9x214 matrix whose rows are
+
+1. Refractive index
+2. Sodium (unit measurement: weight percent in corresponding oxide)
+3. Magnesium
+4. Aluminum
+5. Silicon
+6. Potassium
+7. Calcium
+8. Barium
+9. Iron
+
+"glassTargets" is a 2x214 matrix, where each column indicates the correct category with a 1 in one element (and a zero in the other).
+
+1. Window glass
+2. Non-window glass
+
+----------
+
+This data is available from the UCI Machine Learning Repository.
+
+http://mlearn.ics.uci.edu/MLRepository.html
+
+Murphy,P.M., Aha, D.W. (1994). UCI Repository of machine learning databases [http://www.ics.uci.edu/~mlearn/MLRepository.html]. Irvine, CA: University of California, Department of Information and Computer Science.
+
+From USA Forensic Science Service.

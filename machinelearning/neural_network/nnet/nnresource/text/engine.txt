@@ -1,0 +1,21 @@
+Estimate two aspects of an engine from two measurements.
+
+An estimator can be found by Fitting the inputs and targets
+
+The data set consists of 1199 samples.
+
+"engineInputs" is an 2x1199 matrix, whose rows are:
+
+1: Fuel rate
+2: Speed
+
+"engineTargets" is a 2x1199 matrix, whose rows are:
+
+1: Torque
+2: Nitrous oxide emissions
+
+----------
+
+Donated by Prof. Martin T. Hagan, Colorado State University
+
+http://hagan.ecen.ceat.okstate.edu/

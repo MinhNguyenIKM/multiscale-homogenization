@@ -1,0 +1,13 @@
+Two-element vectors are assigned to four classes.
+
+Samples may be classified using clustering (using only input data) or with Pattern Recognition or Fitting (with input and target data).
+
+The data set consists of 1000 samples.
+
+"simpleclassInputs" is a 2x1000 matrix of values.
+
+"simpleclassTargets" is an 4x1000 matrix, where each ith column indicates which category the ith iris belongs to with a 1 in one element (and zeros in the other elements).
+
+----------
+
+This simple example can be solved with the Neural Network Pattern Recognition Tool (nprtool) or Clustering Tool (nctool).

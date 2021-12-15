@@ -1,0 +1,111 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Radial Basis Overlapping Neurons</title>
+      <meta name="generator" content="MATLAB 7.8">
+      <meta name="date" content="2009-01-19">
+      <meta name="m-file" content="demorb4">
+      <link rel="stylesheet" type="text/css" href="../../../matlab/demos/private/style.css">
+   </head>
+   <body>
+      <div class="header">
+         <div class="left"><a href="matlab:edit demorb4">Open demorb4.m in the Editor</a></div>
+         <div class="right"><a href="matlab:echodemo demorb4">Run in the Command Window</a></div>
+      </div>
+      <div class="content">
+         <h1>Radial Basis Overlapping Neurons</h1>
+         <!--introduction-->
+         <p>A radial basis network is trained to respond to specific inputs with target outputs.  However, because the spread of the radial
+            basis neurons is too high, each neuron responds essentially the same, and the network cannot be designed.
+         </p>
+         <!--/introduction-->
+         <p>Define 21 inputs P and associated targets T.</p><pre class="codeinput">P = -1:.1:1;
+T = [-.9602 -.5770 -.0729  .3771  .6405  .6600  .4609 <span class="keyword">...</span>
+      .1336 -.2013 -.4344 -.5000 -.3930 -.1647  .0988 <span class="keyword">...</span>
+      .3072  .3960  .3449  .1816 -.0312 -.2189 -.3201];
+plot(P,T,<span class="string">'+'</span>);
+title(<span class="string">'Training Vectors'</span>);
+xlabel(<span class="string">'Input Vector P'</span>);
+ylabel(<span class="string">'Target Vector T'</span>);
+</pre><img vspace="5" hspace="5" src="demorb4_01.png" alt=""> <p>The function NEWRB quickly creates a radial basis network which approximates the function defined by P and T.</p>
+         <p>In addition to the training set and targets, NEWRB takes two arguments, the sum-squared error goal and the spread constant.
+             The spread of the radial basis neurons B is set to a very large number.
+         </p><pre class="codeinput">eg = 0.02; <span class="comment">% sum-squared error goal</span>
+sc = 100;  <span class="comment">% spread constant</span>
+net = newrb(P,T,eg,sc);
+</pre><pre class="codeoutput">NEWRB, neurons = 0, MSE = 0.176192
+</pre><p>NEWRB cannot properly design a radial basis network due to the large overlap of the input regions of the radial basis neurons.
+             All the neurons always output 1, and so cannot be used to generate different responses.  To see how the network performs
+            with the training set, simulate the network with the original inputs.  Plot the results on the same graph as the training
+            set.
+         </p><pre class="codeinput">Y = sim(net,P);
+hold <span class="string">on</span>;
+plot(P,Y);
+hold <span class="string">off</span>;
+</pre><img vspace="5" hspace="5" src="demorb4_02.png" alt=""> <p class="footer">Copyright 1992-2005 The MathWorks, Inc.<br>
+            Published with MATLAB&reg; 7.8
+         </p>
+         <p class="footer" id="trademarks">MATLAB and Simulink are registered trademarks of The MathWorks, Inc.  Please see <a href="http://www.mathworks.com/trademarks">www.mathworks.com/trademarks</a> for a list of other trademarks owned by The MathWorks, Inc.  Other product or brand names are trademarks or registered trademarks
+            of their respective owners.
+         </p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Radial Basis Overlapping Neurons
+% A radial basis network is trained to respond to specific inputs with target
+% outputs.  However, because the spread of the radial basis neurons is too high,
+% each neuron responds essentially the same, and the network cannot be designed.
+% 
+% Copyright 1992-2005 The MathWorks, Inc.
+% $Revision: 1.16.2.1 $  $Date: 2005/11/15 01:15:22 $
+
+%%
+% Define 21 inputs P and associated targets T.
+
+P = -1:.1:1;
+T = [-.9602 -.5770 -.0729  .3771  .6405  .6600  .4609 ...
+      .1336 -.2013 -.4344 -.5000 -.3930 -.1647  .0988 ...
+      .3072  .3960  .3449  .1816 -.0312 -.2189 -.3201];
+plot(P,T,'+');
+title('Training Vectors');
+xlabel('Input Vector P');
+ylabel('Target Vector T');
+
+%%
+% The function NEWRB quickly creates a radial basis network which approximates
+% the function defined by P and T.
+% 
+% In addition to the training set and targets, NEWRB takes two arguments, the 
+% sum-squared error goal and the spread constant.  The spread of the radial
+% basis neurons B is set to a very large number.
+
+eg = 0.02; % sum-squared error goal
+sc = 100;  % spread constant
+net = newrb(P,T,eg,sc);
+
+%%
+% NEWRB cannot properly design a radial basis network due to the large overlap
+% of the input regions of the radial basis neurons.  All the neurons always
+% output 1, and so cannot be used to generate different responses.  To see how
+% the network performs with the training set, simulate the network with the
+% original inputs.  Plot the results on the same graph as the training set.
+
+Y = sim(net,P);
+hold on;
+plot(P,Y);
+hold off;
+
+
+displayEndOfDemoMessage(mfilename)
+##### SOURCE END #####
+-->
+   </body>
+</html>

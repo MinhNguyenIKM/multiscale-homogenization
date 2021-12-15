@@ -1,0 +1,70 @@
+<productinfo
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://www.mathworks.com/namespace/info/v1/info.xsd">
+<?xml-stylesheet type="text/xsl" href="http://www.mathworks.com/namespace/info/v1/info.xsl"?>
+
+<matlabrelease>13</matlabrelease>
+<name>Neural Network</name>
+<type>toolbox</type>
+<icon>$toolbox/nnet/nnresource/nnet6/icon/startmenu/nnet_icon.png</icon>
+<help_location>$docroot/toolbox/nnet</help_location>
+
+<list>
+
+<listitem>
+<label>Neural Fitting Tool (nftool)</label>
+<callback>nftool</callback>
+<icon>$toolbox/nnet/nnresource/nnet6/icon/startmenu/nnet_icon.png</icon>
+</listitem>
+
+<listitem>
+<label>Neural Clustering Tool (nctool)</label>
+<callback>nctool</callback>
+<icon>$toolbox/nnet/nnresource/nnet6/icon/startmenu/nnet_icon.png</icon>
+</listitem>
+
+<listitem>
+<label>Neural Pattern Recognition Tool (nprtool)</label>
+<callback>nprtool</callback>
+<icon>$toolbox/nnet/nnresource/nnet6/icon/startmenu/nnet_icon.png</icon>
+</listitem>
+
+<listitem>
+<label>Neural Network Training Display (nntraintool)</label>
+<callback>nntraintool</callback>
+<icon>$toolbox/nnet/nnresource/nnet6/icon/startmenu/figureicon.png</icon>
+</listitem>
+
+<listitem>
+<label>Neural Network Tool (nntool)</label>
+<callback>nntool</callback>
+<icon>$toolbox/nnet/nnresource/nnet6/icon/startmenu/figureicon.png</icon>
+</listitem>
+
+<listitem>
+<label>Help</label>
+<callback>doc nnet/</callback>
+<icon>$toolbox/nnet/nnresource/nnet6/icon/startmenu/book.png</icon>
+</listitem>
+
+<listitem>
+<label>Demos</label>
+<callback>demo toolbox Neural</callback>
+<icon>$toolbox/nnet/nnresource/nnet6/icon/startmenu/demos.png</icon>
+</listitem>
+
+<listitem>
+<label>Neural Simulink Blocks (neural)</label>
+<callback>neural</callback>
+<icon>$toolbox/nnet/nnresource/nnet6/icon/startmenu/simulink.png</icon>
+</listitem>
+
+<listitem>
+<label>Product Page (Web)</label>
+<callback>web http://www.mathworks.com/products/neuralnet/ -browser;</callback>
+<icon>$toolbox/nnet/nnresource/nnet6/icon/startmenu/webicon.png</icon>
+</listitem>
+
+</list>
+
+</productinfo>

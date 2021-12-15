@@ -1,0 +1,153 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>Hopfield Unstable Equilibria</title>
+      <meta name="generator" content="MATLAB 7.8">
+      <meta name="date" content="2009-01-19">
+      <meta name="m-file" content="demohop2">
+      <link rel="stylesheet" type="text/css" href="../../../matlab/demos/private/style.css">
+   </head>
+   <body>
+      <div class="header">
+         <div class="left"><a href="matlab:edit demohop2">Open demohop2.m in the Editor</a></div>
+         <div class="right"><a href="matlab:echodemo demohop2">Run in the Command Window</a></div>
+      </div>
+      <div class="content">
+         <h1>Hopfield Unstable Equilibria</h1>
+         <!--introduction-->
+         <p>A Hopfield network is designed with target stable points.  However, while NEWHOP finds a solution with the minimum number
+            of unspecified stable points, they do often occur.  The Hopfield network designed here is shown to have an undesired equilibrium
+            point.  However, these points are unstable in that any noise in the system will move the network out of them.
+         </p>
+         <!--/introduction-->
+         <p>We would like to obtain a Hopfield network that has the two stable points define by the two target (column) vectors in T.</p><pre class="codeinput">T = [+1 -1; <span class="keyword">...</span>
+      -1 +1];
+</pre><p>Here is a plot where the stable points are shown at the corners.  All possible states of the 2-neuron Hopfield network are
+            contained within the plots boundaries.
+         </p><pre class="codeinput">plot(T(1,:),T(2,:),<span class="string">'r*'</span>)
+axis([-1.1 1.1 -1.1 1.1])
+title(<span class="string">'Hopfield Network State Space'</span>)
+xlabel(<span class="string">'a(1)'</span>);
+ylabel(<span class="string">'a(2)'</span>);
+</pre><img vspace="5" hspace="5" src="demohop2_01.png" alt=""> <p>The function NEWHOP creates Hopfield networks given the stable points T.</p><pre class="codeinput">net = newhop(T);
+</pre><p>Here we define a random starting point and simulate the Hopfield network for 50 steps.  It should reach one of its stable
+            points.
+         </p><pre class="codeinput">a = {rands(2,1)};
+[y,Pf,Af] = sim(net,{1 50},{},a);
+</pre><p>We can make a plot of the Hopfield networks activity.</p>
+         <p>Sure enough, the network ends up in either the upper-left or lower right corners of the plot.</p><pre class="codeinput">record = [cell2mat(a) cell2mat(y)];
+start = cell2mat(a);
+hold <span class="string">on</span>
+plot(start(1,1),start(2,1),<span class="string">'bx'</span>,record(1,:),record(2,:))
+</pre><img vspace="5" hspace="5" src="demohop2_02.png" alt=""> <p>Unfortunately, the network has undesired stable points at places other than the corners.  We can see this when we simulate
+            the Hopfield for the five initial weights, P.
+         </p>
+         <p>These points are exactly between the two target stable points.  The result is that they all move into the center of the state
+            space, where an undesired stable point exists.
+         </p><pre class="codeinput">plot(0,0,<span class="string">'ko'</span>);
+P = [-1.0 -0.5 0.0 +0.5 +1.0;
+     -1.0 -0.5 0.0 +0.5 +1.0];
+color = <span class="string">'rgbmy'</span>;
+<span class="keyword">for</span> i=1:5
+   a = {P(:,i)};
+   [y,Pf,Af] = sim(net,{1 50},{},a);
+   record=[cell2mat(a) cell2mat(y)];
+   start = cell2mat(a);
+   plot(start(1,1),start(2,1),<span class="string">'kx'</span>,record(1,:),record(2,:),color(rem(i,5)+1))
+   drawnow
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="demohop2_03.png" alt=""> <p class="footer">Copyright 1992-2007 The MathWorks, Inc.<br>
+            Published with MATLAB&reg; 7.8
+         </p>
+         <p class="footer" id="trademarks">MATLAB and Simulink are registered trademarks of The MathWorks, Inc.  Please see <a href="http://www.mathworks.com/trademarks">www.mathworks.com/trademarks</a> for a list of other trademarks owned by The MathWorks, Inc.  Other product or brand names are trademarks or registered trademarks
+            of their respective owners.
+         </p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% Hopfield Unstable Equilibria
+% A Hopfield network is designed with target stable points.  However, while
+% NEWHOP finds a solution with the minimum number of unspecified stable points,
+% they do often occur.  The Hopfield network designed here is shown to have an
+% undesired equilibrium point.  However, these points are unstable in that any
+% noise in the system will move the network out of them.
+% 
+% Copyright 1992-2007 The MathWorks, Inc.
+% $Revision: 1.16.2.2 $  $Date: 2008/01/10 21:11:01 $
+
+%%
+% We would like to obtain a Hopfield network that has the two stable points
+% define by the two target (column) vectors in T.
+T = [+1 -1; ...
+      -1 +1];
+
+%%
+% Here is a plot where the stable points are shown at the corners.  All possible
+% states of the 2-neuron Hopfield network are contained within the plots
+% boundaries.
+
+plot(T(1,:),T(2,:),'r*')
+axis([-1.1 1.1 -1.1 1.1])
+title('Hopfield Network State Space')
+xlabel('a(1)');
+ylabel('a(2)');
+
+%%
+% The function NEWHOP creates Hopfield networks given the stable points T.
+
+net = newhop(T);
+
+%%
+% Here we define a random starting point and simulate the Hopfield network for
+% 50 steps.  It should reach one of its stable points.
+
+a = {rands(2,1)};
+[y,Pf,Af] = sim(net,{1 50},{},a);
+
+%%
+% We can make a plot of the Hopfield networks activity.
+%
+% Sure enough, the network ends up in either the upper-left or lower right
+% corners of the plot.
+
+record = [cell2mat(a) cell2mat(y)];
+start = cell2mat(a);
+hold on
+plot(start(1,1),start(2,1),'bx',record(1,:),record(2,:))
+
+%%
+% Unfortunately, the network has undesired stable points at places other than
+% the corners.  We can see this when we simulate the Hopfield for the
+% five initial weights, P.
+%
+% These points are exactly between the two target stable points.  The result is
+% that they all move into the center of the state space, where an undesired
+% stable point exists.
+
+plot(0,0,'ko');
+P = [-1.0 -0.5 0.0 +0.5 +1.0;  
+     -1.0 -0.5 0.0 +0.5 +1.0];
+color = 'rgbmy';
+for i=1:5
+   a = {P(:,i)};
+   [y,Pf,Af] = sim(net,{1 50},{},a);
+   record=[cell2mat(a) cell2mat(y)];
+   start = cell2mat(a);
+   plot(start(1,1),start(2,1),'kx',record(1,:),record(2,:),color(rem(i,5)+1))
+   drawnow
+end
+
+
+displayEndOfDemoMessage(mfilename)
+##### SOURCE END #####
+-->
+   </body>
+</html>
