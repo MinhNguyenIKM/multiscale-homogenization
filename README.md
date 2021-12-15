@@ -81,32 +81,32 @@ That's it. The program will execute the FE-FFT homogenization (the FFT part is t
 ## Guideline how to run neural network - homogenization (the training with machine learning must complete in prior to stop at this step)
 I am going to guide you on how to run a 2D Timoshenko beam with neural networks (NN) as shown in the last example in my paper.
 
-1. First, you must run the file test_TimoBeam_2scale.py in folder examples/TimoBeam/homo-nn-Q4-mesh1. Once again, it will go to file PyFEM/pyfem-1.0/pyfem/elements/FiniteStrainContinuumPF.py to calculate the macro Stress and macro Moduli.
+First, you must run the file test_TimoBeam_2scale.py in folder examples/TimoBeam/homo-nn-Q4-mesh1. Once again, it will go to file PyFEM/pyfem-1.0/pyfem/elements/FiniteStrainContinuumPF.py to calculate the macro Stress and macro Moduli.
 If you get any ERROR with file MaterialManager.py, probably you forget to COMMENT the getStress(kinematic, Isam) function and UNCOMMENT the getStress(kinematic) like this
 
-self.mat.setIter( iSam )
+*self.mat.setIter( iSam )*
    
-return self.mat.getStress(kinematic)
+*return self.mat.getStress(kinematic)*
    
-\# return self.mat.getStress( kinematic, iSam ) # for running homogenization
+\# *return self.mat.getStress( kinematic, iSam )* # for running homogenization
 
-2. After that, the code will go to the getStress(kinematic) method of the class MachineLearningPrediction where you can open the file PyFEM/pyfem-1.0/pyfem/materials/MachineLearningPrediction.py to look at the lines
+After that, the code will go to the getStress(kinematic) method of the class MachineLearningPrediction where you can open the file PyFEM/pyfem-1.0/pyfem/materials/MachineLearningPrediction.py to look at the lines
 
-from machinelearning.training_results import recover_potential_energy as ml
+*from machinelearning.training_results import recover_potential_energy as ml*
 
 and
 
-P, K4, W = ml.cal_material_parameter2D(F, type)
+*P, K4, W = ml.cal_material_parameter2D(F, type)*
 
 Here, you will recognize it will invoke the function cal_material_parameter2D() of module machinelearning/training_results/recover_potential_energy.py
 There, if you get any ERROR with file recover_potential_energy.py, probably you forget to edit the dimension settings. Please, edit dim=2 instead of dim=1
 
-dim = 2
+*dim = 2*
 
-3. All the codes in file recover_potential_energy.py are implemented based on the EQUATION (43) in my paper.
+Thirdly, all the codes in file recover_potential_energy.py are implemented based on the EQUATION (43) in my paper.
 
-4. After the program finishes without errors, you can open the output files *.vtu in folder examples/TimoBeam/homo-nn-Q4-mesh1 by paraview to play with the contour plots.
+Fourthly, after the program finishes without errors, you can open the output files *.vtu in folder examples/TimoBeam/homo-nn-Q4-mesh1 by paraview to play with the contour plots.
 
-5. Note that here is the example with trained neural networks for the circular-inclusion materials. I already trained my neural networks for this material. If you have another kind of material, you must train the neural network with your material inputs to get the neural network's parameters which are weights and biases (Please, refer to the SECTION 4.2.2 for more specifications). If you need my help on how to train a network for a new material, I will help you later.
+Finally, note that here is the example with trained neural networks for the circular-inclusion materials. I already trained my neural networks for this material. If you have another kind of material, you must train the neural network with your material inputs to get the neural network's parameters which are weights and biases (Please, refer to the SECTION 4.2.2 for more specifications). If you need my help on how to train a network for a new material, I will help you later.
 
 Happy coding!
