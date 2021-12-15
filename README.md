@@ -110,3 +110,11 @@ Fourthly, after the program finishes without errors, you can open the output fil
 Finally, note that here is the example with trained neural networks for the circular-inclusion materials. I already trained my neural networks for this material. If you have another kind of material, you must train the neural network with your material inputs to get the neural network's parameters which are weights and biases (Please, refer to the SECTION 4.2.2 for more specifications).
 
 Happy coding!
+   
+## Guideline how to generate data and train data
+   
+I will take 1D as an example for the sake of simplicity. When you are able to generate and train network with 1D case, the 2D case becomes easy to control as the consequence.
+   
+Step 1. Run file ingest_data_1D.py in folder machinelearning by execute this command
+   
+*python mic2D.solve_nonlinear_GalerkinFFT*
