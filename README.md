@@ -72,9 +72,9 @@ After the running is done, the program will return some *.vtu files in which you
 
 *Important note*: Please check the file MaterialManager.py under directory <workingdir/PyFEM/pyfem-1.0/pyfem/materials/> and comment the code "return self.mat.getStress(kinematic)" (this code is not for homogenization), uncomment the code "return self.mat.getStress(kinematic, iSam)" like this
 
-\# return self.mat.getStress(kinematic) 
+\*# return self.mat.getStress(kinematic) *
    
-return self.mat.getStress( kinematic, iSam ) # for running homogenization
+*return self.mat.getStress( kinematic, iSam ) # for running homogenization *
 
 That's it. The program will execute the FE-FFT homogenization (the FFT part is this file <workingdir>/microscale/fftgarlerkin/micro2D_largedeformation_elasticity.py)
    
