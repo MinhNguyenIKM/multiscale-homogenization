@@ -78,7 +78,7 @@ return self.mat.getStress( kinematic, iSam ) # for running homogenization
 
 That's it. The program will execute the FE-FFT homogenization (the FFT part is this file <workingdir>/microscale/fftgarlerkin/micro2D_largedeformation_elasticity.py)
    
-## Guideline how to run neural network - homogenization (the training with machine learning must complete in prior to stop at this step)
+## Guideline how to run neural network - homogenization (the training with machine learning must complete prior to stop at this step)
 I am going to guide you on how to run a 2D Timoshenko beam with neural networks (NN) as shown in the last example in my paper.
 
 First, you must run the file test_TimoBeam_2scale.py in folder examples/TimoBeam/homo-nn-Q4-mesh1. Once again, it will go to file PyFEM/pyfem-1.0/pyfem/elements/FiniteStrainContinuumPF.py to calculate the macro Stress and macro Moduli.
