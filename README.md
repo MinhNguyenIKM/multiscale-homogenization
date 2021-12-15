@@ -53,7 +53,7 @@ b. add the above line to the end of file ~/.bashrc and execute "source ~/.bashrc
 
 ### METHOD 2
 1. Follow steps 1, 2, 3 in METHOD 1
-2. python install.py
+2. run this command: python install.py
 
 ## Guideline how to run homogenization example (two-scale homogenization without the intervention of machine learning)
 I am going to write you a tutorial about "How to run the example - Timoshenko-Beam homogenization with the matrix-inclusion RVEs". Basically, this is the beam example without the neural network part in my publication.
