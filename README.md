@@ -50,3 +50,26 @@ Setup:
 a. export PYTHONPATH="$PYTHONPATH:\<workingdir\>"
 
 b. add the above line to the end of file ~/.bashrc and execute "source ~/.bashrc"
+
+## Guideline how to run homogenization example (two-scale homogenization without the intervention of machine learning)
+I am going to write you a tutorial about "How to run the example - Timoshenko-Beam homogenization with the matrix-inclusion RVEs". Basically, this is the beam example without the neural network part in my publication.
+
+Basically, all the examples are put in the directory: <workingdir>/examples
+
+For your requested example, let assume that we use Q4 element, coarse mesh. Please go to the directory: <workingdir>/examples/TimoBeam/homo-fft-Q4-mesh1/
+
+You just simple run the file test_TimoBeam_2scale.py. This file will need the data file (TimoBeam_2scale.dat) and the setting file (TimoBeam.pro). I already created all these files for you.
+
+After the running is done, the program will return some *.vtu files in which you will need Paraview (you can download it here https://www.paraview.org/) for the postprocessing.
+   
+![image](https://user-images.githubusercontent.com/34099527/146178152-93f19658-ad5d-4c97-949b-02c968423ff7.png)
+
+![image](https://user-images.githubusercontent.com/34099527/146178204-964c7c4c-42ab-4c5d-b6a8-9cf09455fc12.png)
+
+Important note: Please check the file MaterialManager.py under directory <workingdir/PyFEM/pyfem-1.0/pyfem/materials/> and comment the code "return self.mat.getStress(kinematic)" (this code is not for homogenization), uncomment the code "return self.mat.getStress(kinematic, iSam)" like this
+
+# return self.mat.getStress(kinematic)
+return self.mat.getStress( kinematic, iSam ) # for running homogenization
+
+That's it. The program will execute the FE-FFT homogenization (the FFT part is this file <workingdir>/microscale/fftgarlerkin/micro2D_largedeformation_elasticity.py)
+   
