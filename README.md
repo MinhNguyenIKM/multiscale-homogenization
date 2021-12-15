@@ -153,6 +153,14 @@ Step 2. Place the output file ./dataFiles/training_data_1D_mechanics_nonlinear.d
    
 *a=RS_HDMR_NN('training_data_1D_mechanics_nonlinear.dat', 'training_data_1D_mechanics_nonlinear.dat', 'Mechanics1D_Nonlinear_1d_1com_5N_100M', [tolerance], [N], 200000\*[1], npoints, [fns], neuron, cyclemax, epochsinseq, ifRegularisation, ifTestPtsSameFile, CoordTransformNeuron, PartialNNoutputNeuron, ifTest)*
    
-The results of the training (neural network's parameters) will be stored in the file Mechanics1D_Nonlinear_1d_1com_5N_100M.
+The results of the training (neural network's parameters) will be stored in the file Mechanics1D_Nonlinear_1d_1com_5N_100M_NNs.dat
    
 The meaning of parameters defined in matlab file is explained in "Manzhos S, Yamashita K, Carrington T. Fitting sparse multidimensional data with low-dimensional terms. Computer Physics Communications 2009; 180(10): 2002 - 2012. doi: https://doi.org/10.1016/j.cpc.2009.05.022"
+   
+Step 3: We have already trained the neural network and obtain the optimal network parameters. Now we want to compare the results given by between neural network and fe-fft or fullscale homogenzation. Simply place the neural network's output file in the folder machinelearning/training_results/1DTest and run file test_homo_nonlinear1D.py
+
+*python test_homo_nonlinear1D.py*
+   
+The file will automatically parse the neural networks's output to get the parameters and calculate the output with corresponding input as the mechanism of neural network, another part of this program is that it will call two-scale homogenization fe-fft and return the result. Please note that we should modify the dimension to 1D in file machinelearning/training_results/recover_potential_energy.py (dim=1).
+   
+   
