@@ -162,6 +162,6 @@ Step 3: We have already trained the neural network and obtain the optimal networ
    
 The file will automatically parse the neural networks's output to get the parameters and calculate the output with corresponding input as the mechanism of neural network, another part of this program is that it will call two-scale homogenization fe-fft and return the result. Please note that we should modify the dimension to 1D in file machinelearning/training_results/recover_potential_energy.py (dim=1).
 
-![image](https://user-images.githubusercontent.com/34099527/146214315-1f226a34-3959-42d2-93a1-7b9f0906e13a.png)
+![image](https://user-images.githubusercontent.com/34099527/146215314-1ffd924e-69c4-4232-9abb-2c186cae6530.png)
 
 
