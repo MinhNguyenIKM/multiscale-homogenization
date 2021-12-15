@@ -118,3 +118,25 @@ I will take 1D as an example for the sake of simplicity. When you are able to ge
 Step 1. Run file ingest_data_1D.py in folder machinelearning by execute this command
    
 *python mic2D.solve_nonlinear_GalerkinFFT*
+
+Then, the output will be stored in file ./dataFiles/training_data_1D_mechanics_nonlinear.dat in which the 1st column denotes the macro strain and the 2nd column refers to the macro energy.
+
+Step 2. Place the output file ./dataFiles/training_data_1D_mechanics_nonlinear.dat in the folder machinelearning/neural_network/ and then create a new matlab file e.g., train_1D_mechanics_nonlinear.m with the content looks like in the following
+
+d=1
+npoints=[100 450]
+fns=1
+N=5
+neuron='tansig'
+cyclemax=30
+epochsinseq=100
+ifRegularisation=0
+tolerance = 1e-10
+ifRegularisation=0
+ifTestPtsSameFile=1
+CoordTransformNeuron='purelin'
+PartialNNoutputNeuron='purelin'
+ifTest = 0 
+a=RS_HDMR_NN('training_data_1D_mechanics_nonlinear.dat', 'training_data_1D_mechanics_nonlinear.dat', 'Mechanics1D_Nonlinear_1d_1com_5N_100M', [tolerance], [N], 200000*[1], npoints, [fns], neuron, cyclemax, epochsinseq, ifRegularisation, ifTestPtsSameFile, CoordTransformNeuron, PartialNNoutputNeuron, ifTest);
+   
+And the 
