@@ -153,4 +153,6 @@ Step 2. Place the output file ./dataFiles/training_data_1D_mechanics_nonlinear.d
    
 *a=RS_HDMR_NN('training_data_1D_mechanics_nonlinear.dat', 'training_data_1D_mechanics_nonlinear.dat', 'Mechanics1D_Nonlinear_1d_1com_5N_100M', [tolerance], [N], 200000*[1], npoints, [fns], neuron, cyclemax, epochsinseq, ifRegularisation, ifTestPtsSameFile, CoordTransformNeuron, PartialNNoutputNeuron, ifTest);*
    
-And the 
+The results of the training (neural network's parameters) will be stored in the file Mechanics1D_Nonlinear_1d_1com_5N_100M.
+   
+The meaning of parameters defined in matlab file is explained in "Manzhos S, Yamashita K, Carrington T. Fitting sparse multidimensional data with low-dimensional terms. Computer Physics Communications 2009; 180(10): 2002 - 2012. doi: https://doi.org/10.1016/j.cpc.2009.05.022"
