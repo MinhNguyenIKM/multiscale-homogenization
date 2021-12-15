@@ -52,7 +52,7 @@ a. export PYTHONPATH="$PYTHONPATH:\<workingdir\>"
 b. add the above line to the end of file ~/.bashrc and execute "source ~/.bashrc"
 
 ### METHOD 2
-1. Follow step 1, 2, 3 in METHOD 1
+1. Follow steps 1, 2, 3 in METHOD 1
 2. python install.py
 
 ## Guideline how to run homogenization example (two-scale homogenization without the intervention of machine learning)
