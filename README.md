@@ -11,7 +11,7 @@ Lu Trong Khiem Nguyen,
 Timon Rabczuk,
 Xiaoying Zhuang,
 
-Developement: ntvminh286@gmail.com (institute email: minh.nguyen@ikm.uni-hannover.de)
+Developement: ntvminh286@gmail.com (institute email: minh.nguyen@iop.uni-hannover.de)
 
 DOI: https://doi.org/10.1002/nme.6493
 
