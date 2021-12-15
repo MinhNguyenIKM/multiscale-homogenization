@@ -18,7 +18,7 @@ if os.path.isfile(home + "/.bashrc"):
 	exit(1)
 elif os.path.isfile(home + "/.bash_profile"):
 	try:
-		filename = home = "/.bash_profile"
+		filename = home + "/.bash_profile"
 		f = open(filename, 'a+')
 		print("Opening file:" + filename)
 	except IOError as e:
