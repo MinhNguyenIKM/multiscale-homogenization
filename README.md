@@ -107,6 +107,6 @@ Thirdly, all the codes in file recover_potential_energy.py are implemented based
 
 Fourthly, after the program finishes without errors, you can open the output files *.vtu in folder examples/TimoBeam/homo-nn-Q4-mesh1 by paraview to play with the contour plots.
 
-Finally, note that here is the example with trained neural networks for the circular-inclusion materials. I already trained my neural networks for this material. If you have another kind of material, you must train the neural network with your material inputs to get the neural network's parameters which are weights and biases (Please, refer to the SECTION 4.2.2 for more specifications). If you need my help on how to train a network for a new material, I will help you later.
+Finally, note that here is the example with trained neural networks for the circular-inclusion materials. I already trained my neural networks for this material. If you have another kind of material, you must train the neural network with your material inputs to get the neural network's parameters which are weights and biases (Please, refer to the SECTION 4.2.2 for more specifications).
 
 Happy coding!
