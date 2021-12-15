@@ -66,7 +66,7 @@ After the running is done, the program will return some *.vtu files in which you
 
 ![image](https://user-images.githubusercontent.com/34099527/146178204-964c7c4c-42ab-4c5d-b6a8-9cf09455fc12.png)
 
-<u>Important note</u>: Please check the file MaterialManager.py under directory <workingdir/PyFEM/pyfem-1.0/pyfem/materials/> and comment the code "return self.mat.getStress(kinematic)" (this code is not for homogenization), uncomment the code "return self.mat.getStress(kinematic, iSam)" like this
+*Important note*: Please check the file MaterialManager.py under directory <workingdir/PyFEM/pyfem-1.0/pyfem/materials/> and comment the code "return self.mat.getStress(kinematic)" (this code is not for homogenization), uncomment the code "return self.mat.getStress(kinematic, iSam)" like this
 
 \# return self.mat.getStress(kinematic) 
    
