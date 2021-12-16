@@ -114,13 +114,13 @@ Happy coding!
    
 I will take 1D as an example for the sake of simplicity. When you are able to generate and train network with 1D case, the 2D case becomes easy to control as the consequence.
    
-Step 1. Run file ingest_data_1D.py in folder machinelearning by execute this command
+Step 1: Run file ingest_data_1D.py in folder machinelearning by execute this command
    
 *python ingest_data_1D.py*
 
 Then, the output will be stored in file ./dataFiles/training_data_1D_mechanics_nonlinear.dat in which the 1st column denotes the macro strain and the 2nd column refers to the macro energy.
 
-Step 2. Place the output file ./dataFiles/training_data_1D_mechanics_nonlinear.dat in the folder machinelearning/neural_network/ and then create a new matlab file e.g., train_1D_mechanics_nonlinear.m with the content looks like in the following
+Step 2: Place the output file ./dataFiles/training_data_1D_mechanics_nonlinear.dat in the folder machinelearning/neural_network/ and then create a new matlab file e.g., train_1D_mechanics_nonlinear.m with the content looks like in the following
 
 *d=1*
    
@@ -156,12 +156,10 @@ The results of the training (neural network's parameters) will be stored in the 
    
 The meaning of parameters defined in matlab file is explained in "Manzhos S, Yamashita K, Carrington T. Fitting sparse multidimensional data with low-dimensional terms. Computer Physics Communications 2009; 180(10): 2002 - 2012. doi: https://doi.org/10.1016/j.cpc.2009.05.022"
    
-Step 3. We have already trained the neural network and obtain the optimal network parameters. Now we want to compare the results given by between neural network and fe-fft or fullscale homogenzation. Simply place the neural network's output file in the folder machinelearning/training_results/1DTest and run file test_homo_nonlinear1D.py
+Step 3: We have already trained the neural network and obtain the optimal network parameters. Now we want to compare the results given by between neural network and fe-fft or fullscale homogenzation. Simply place the neural network's output file in the folder machinelearning/training_results/1DTest and run file test_homo_nonlinear1D.py
 
 *python test_homo_nonlinear1D.py*
    
 The file will automatically parse the neural networks's output to get the parameters and give prediction with corresponding input as the mechanism of neural network, another part of this program is that it will call two-scale homogenization fe-fft and return the result. Please note that we should modify the dimension to 1D in file machinelearning/training_results/recover_potential_energy.py (dim=1).
 
 ![image](https://user-images.githubusercontent.com/34099527/146215314-1ffd924e-69c4-4232-9abb-2c186cae6530.png)
-
-
